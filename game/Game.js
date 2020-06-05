@@ -31,7 +31,7 @@ class Game {
 		this.color = new THREE.Color();
 
 		this.crono = document.getElementById("crono");
-		this.tempo = new THREE.Clock();
+		this.tempo = new THREE.Clock(false);
 		this.totalTime = 0; //Controls the total time, to restart the chrono
 		this.startTheClock = false;
 
@@ -163,13 +163,13 @@ init() {
 	//Audio
 	var listener = new THREE.AudioListener();
 	this.camera.add (listener);
-	var sound = new THREE.Audio( listener );
+	this.sound = new THREE.Audio( listener );
 	var audioLoader = new THREE.AudioLoader();
 	audioLoader.load(this.level.getMusic(), function( buffer ) {
-		sound.setBuffer( buffer );
-		sound.setLoop( true );
-		sound.setVolume( 0.5 );
-		sound.play();
+		that.sound.setBuffer( buffer );
+		that.sound.setLoop( true );
+		that.sound.setVolume(0.5);
+		that.sound.play();
 	});
 
 }
@@ -229,7 +229,7 @@ animate() {
 				this.canJump = false;
 			}
 
-			if (onObjective === true) {
+			if (onObjective === true) { //endgame
 				console.log("has ganado");
 			}
 
@@ -283,7 +283,6 @@ animate() {
 	}
 	else {
 		TWEEN.update();
-		this.totalTime = this.tempo.oldTime;
 
 		if (this.controls.isLocked === true) {
 			this.level.setStartupDone(true);
@@ -291,6 +290,8 @@ animate() {
 	}
 
 	this.renderer.render(this.level.getScene(), this.camera);
+	this.sound.setVolume(document.getElementById("musicRange").value / 100.0);
+	document.getElementById("musicRange").value = this.sound.getVolume()*100;
 }
 }
 

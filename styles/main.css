@@ -129,12 +129,58 @@ a, button, input, select {
 	padding: 10px;
 }
 
-#tittle {
+#title {
 	font-size: 600%;
 	text-align: center;
 }
 
-#level_tittle {
+#level_title {
 	font-size: 400%;
 	text-align: center;
+}
+
+.pauseTitle{
+	width:100%;
+	font-size:150%;
+	background-color: blue;
+}
+
+.slideContainer {
+	width: 100%;
+	text-align: center;
+}
+
+.slider {
+	-webkit-appearance: none;
+	width: 300px;
+	height: 25px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+
+.slider:hover {
+	opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 25px;
+	height: 25px;
+	background: #FFFF00;
+	cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+	width: 25px;
+	height: 25px;
+	background: #FFFF00;
+	cursor: pointer;
+}
+
+.menuField {
+	font-size: 150%;
 }

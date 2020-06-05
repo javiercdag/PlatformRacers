@@ -8,7 +8,7 @@ class Level1 extends Level {
 		this.startingView = new THREE.Vector3(20, 60, 0);
 		this.gravity = 7.0;
 
-		this.cinematicCoordenates.push([new THREE.Vector3(-50, 100, 0), new THREE.Vector3(1030, 100, 0), new THREE.Vector3(1100, 60, 0)]);
+		this.cinematicCoordenates.push([new THREE.Vector3(-50, 300, 0), new THREE.Vector3(1030, 300, 0), new THREE.Vector3(1100, 60, 0)]);
 
 		//Plataforma inicial
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/moon.jpg'));
