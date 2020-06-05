@@ -144,6 +144,14 @@ a, button, input, select {
 	font-size:150%;
 }
 
+#resume{
+	color: yellow;
+	border-style: solid;
+	padding:2%;
+	width:100%;
+	font-size:150%;
+}
+
 .slideContainer {
 	width: 100%;
 	text-align: center;

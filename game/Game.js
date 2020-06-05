@@ -17,7 +17,7 @@ class Game {
 				this.level = new Level1(this.camera);
 				break;
         }
-		
+
 		this.moveForward = false;
 		this.moveBackward = false;
 		this.moveLeft = false;
@@ -52,13 +52,20 @@ init() {
 
 	var blocker = document.getElementById('blocker');
 	var instructions = document.getElementById('instructions');
+	var resume = document.getElementById('resume');
 
-	var that = this;
-	instructions.addEventListener('click', function () {
+	resume.addEventListener('click', function () {
 
 		that.controls.lock();
 
 	}, false);
+
+	var that = this;
+	/*instructions.addEventListener('click', function () {
+
+		that.controls.lock();
+
+	}, false);*/
 
 	this.controls.addEventListener('lock', function () {
 
@@ -241,7 +248,7 @@ animate() {
 			this.prevTime = time;
 
 		}
-			
+
 
 		if (this.startTheClock == true) {/* Crono */
 
@@ -279,7 +286,7 @@ animate() {
 			this.totalTime = this.tempo.oldTime;
 		}
 
-		
+
 	}
 	else {
 		TWEEN.update();
