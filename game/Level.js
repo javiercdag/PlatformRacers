@@ -8,6 +8,8 @@ class Level {
 		this.startingSpot;
 		this.startingView;
 
+		this.music = '../resources/music/ElectronicFantasy.ogg';
+
 		const loader = new THREE.CubeTextureLoader();
 		const bgTexture = loader.load([
 			'resources/images/front.png',
@@ -45,13 +47,28 @@ class Level {
 		//var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 		//this.scene.add(floor);
 
-		
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100));
-		this.scene.add(this.createPlatform(new THREE.Vector3(100, 50, 0), 40, 2, 40));
-		this.scene.add(this.createPlatform(new THREE.Vector3(170, 50, 0), 40, 2, 40));
-		this.scene.add(this.createPlatform(new THREE.Vector3(230, 55, 0), 40, 2, 40));
 
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(330, 55, 0), 40, 2, 400);
+		//Plataforma inicial
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100,'resources/textures/moon.jpg'));
+
+		//Conector 1
+		this.scene.add(this.createPlatform(new THREE.Vector3(120, 80, 0), 40, 2, 40,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(190, 110, 0), 40, 2, 40,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(260, 140, 0), 40, 2, 40,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(340, 140, 50), 40, 2, 40,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(450, 140, 90), 40, 2, 40,'resources/textures/moon.jpg'));
+
+		//Conector 2
+		this.scene.add(this.createPlatform(new THREE.Vector3(540, 55, 0), 30, 2, 200,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(620, 55, -200), 30, 2, 200,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(700, 55, -420), 30, 2, 200,'resources/textures/moon.jpg'));
+
+		this.scene.add(this.createPlatform(new THREE.Vector3(780, 55, -480), 30, 2, 40,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -450), 30, 2, 40,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -350), 30, 2, 40,'resources/textures/moon.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -280), 50, 2, 50,'resources/textures/moon.jpg'));
+
+		var objectivePlatform = this.createPlatform(new THREE.Vector3(1030, 55, 0), 400, 2, 400,'resources/textures/moon.jpg');
 		this.objective.push(objectivePlatform);
 		this.scene.add(objectivePlatform);
 
@@ -59,9 +76,12 @@ class Level {
 		player.lookAt(this.startingView);
 	}
 
-	createPlatform(position, width, height, depth) {
+	createPlatform(position, width, height, depth, texture) {
 		var platformGeometry = new THREE.BoxBufferGeometry(width, height, depth);
-		var platformMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+
+		var texture = new THREE.TextureLoader().load( texture );
+		var platformMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+		//var platformMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
 		var platform = new THREE.Mesh(platformGeometry, platformMaterial);
 		platform.position.set(position.x, position.y, position.z);
 		this.objects.push(platform);
@@ -75,6 +95,10 @@ class Level {
 
 	getGravity() {
 		return this.gravity;
+	}
+
+	getMusic() {
+		return this.music;
 	}
 
 	getObjective() {
@@ -92,7 +116,7 @@ class Level {
 	getStartingView() {
 		return this.startingView;
 	}
-	
+
 
 
 }

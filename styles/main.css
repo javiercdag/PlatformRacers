@@ -128,3 +128,13 @@ a, button, input, select {
 	margin-top: 20px;
 	padding: 10px;
 }
+
+#tittle {
+	font-size: 600%;
+	text-align: center;
+}
+
+#level_tittle {
+	font-size: 400%;
+	text-align: center;
+}

@@ -28,12 +28,13 @@ class Game {
 
 		this.crono = document.getElementById("crono");
 		this.tempo = new THREE.Clock();
+		this.totalTime = 0; //Controls the total time, to restart the chrono
 
 		this.init();
 		this.animate();
-		
 
-		
+
+
 	}
 
 init() {
@@ -106,6 +107,7 @@ init() {
 				that.camera.lookAt(that.level.getStartingView());
 				that.velocity.x = 0;
 				that.velocity.z = 0;
+				that.totalTime = that.tempo.oldTime;
 				break;
 
 		}
@@ -113,7 +115,7 @@ init() {
 	};
 
 	this.onKeyUp = function (event) {
-		
+
 		switch (event.keyCode) {
 
 			case 38: // up
@@ -151,6 +153,19 @@ init() {
 	document.body.appendChild(this.renderer.domElement);
 
 	window.addEventListener('resize', this.onWindowResize, false);
+
+
+	//Audio
+	var listener = new THREE.AudioListener();
+	this.camera.add (listener);
+	var sound = new THREE.Audio( listener );
+	var audioLoader = new THREE.AudioLoader();
+	audioLoader.load(this.level.getMusic(), function( buffer ) {
+		sound.setBuffer( buffer );
+		sound.setLoop( true );
+		sound.setVolume( 0.5 );
+		sound.play();
+	});
 
 }
 
@@ -198,7 +213,7 @@ animate() {
 
 		if (this.moveLeft || this.moveRight) this.velocity.x -= this.direction.x * 400.0 * delta;
 		else if (onObject) this.velocity.x = 0;
-		
+
 		if (onObject === true) {
 
 			this.velocity.y = Math.max(0, this.velocity.y);
@@ -229,6 +244,7 @@ animate() {
 		this.camera.lookAt(this.level.getStartingView());
 		this.velocity.x = 0;
 		this.velocity.z = 0;
+		this.totalTime = this.tempo.oldTime;
 	}
 
 /* Crono */
@@ -236,8 +252,8 @@ animate() {
 		this.tempo.start();
 
 	this.tempo.stop();
-	
-	var timeElapsed = this.tempo.oldTime;
+
+	var timeElapsed = this.tempo.oldTime - this.totalTime;
 	this.tempo.start();
 
 	var secondsElapsed = timeElapsed / 1000;
@@ -253,7 +269,7 @@ animate() {
 	var formatted = hours + ':' + minutes + ':' + Math.trunc(seconds) + ":" + miliseconds.toFixed(0);
 
 	this.crono.innerHTML = formatted;
-	
+
 	this.renderer.render(this.level.getScene(), this.camera);
 
 
