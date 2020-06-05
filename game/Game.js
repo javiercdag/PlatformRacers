@@ -12,8 +12,12 @@ class Game {
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 		this.camera.position.y = 10; // player height
 
-		this.level = new Level(this.camera);
-
+		switch (document.getElementById("level").innerHTML) {
+			case "1":
+				this.level = new Level1(this.camera);
+				break;
+        }
+		
 		this.moveForward = false;
 		this.moveBackward = false;
 		this.moveLeft = false;
@@ -29,6 +33,7 @@ class Game {
 		this.crono = document.getElementById("crono");
 		this.tempo = new THREE.Clock();
 		this.totalTime = 0; //Controls the total time, to restart the chrono
+		this.startTheClock = false;
 
 		this.init();
 		this.animate();
@@ -179,101 +184,114 @@ onWindowResize() {
 }
 
 animate() {
-
-	requestAnimationFrame(()=>this.animate());
+	requestAnimationFrame(() => this.animate());
 	this.stats.update();
 
-	if (this.controls.isLocked === true) {
+	if (this.level.isStartupDone()) {
 
-		this.raycaster.ray.origin.copy(this.controls.getObject().position);
-		this.raycaster.ray.origin.y -= 10;
+		if (this.controls.isLocked === true) {
+			this.startTheClock = true;
+			this.raycaster.ray.origin.copy(this.controls.getObject().position);
+			this.raycaster.ray.origin.y -= 10;
 
-		var intersections = this.raycaster.intersectObjects(this.level.getCollidableObjects());
-		var playerOnObjective = this.raycaster.intersectObjects(this.level.getObjective());
+			var intersections = this.raycaster.intersectObjects(this.level.getCollidableObjects());
+			var playerOnObjective = this.raycaster.intersectObjects(this.level.getObjective());
 
-		var onObject = intersections.length > 0;
-		var onObjective = playerOnObjective.length > 0;
+			var onObject = intersections.length > 0;
+			var onObjective = playerOnObjective.length > 0;
 
-		var time = performance.now();
-		var delta = (time - this.prevTime) / 1000;
+			var time = performance.now();
+			var delta = (time - this.prevTime) / 1000;
 
-		this.velocity.x -= this.velocity.x * 3.5 * delta;
-		this.velocity.z -= this.velocity.z * 3.5 * delta;
+			this.velocity.x -= this.velocity.x * 3.5 * delta;
+			this.velocity.z -= this.velocity.z * 3.5 * delta;
 
-		var gravity = this.level.getGravity();
+			var gravity = this.level.getGravity();
 
-		this.velocity.y -= gravity * 90.0 * delta; // 100.0 = mass
+			this.velocity.y -= gravity * 90.0 * delta; // 100.0 = mass
 
-		this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
-		this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
-		this.direction.normalize(); // this ensures consistent movements in all directions
+			this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
+			this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
+			this.direction.normalize(); // this ensures consistent movements in all directions
 
-		if (this.moveForward || this.moveBackward) this.velocity.z -= this.direction.z * 400.0 * delta;
-		else if(onObject) this.velocity.z = 0;
+			if (this.moveForward || this.moveBackward) this.velocity.z -= this.direction.z * 400.0 * delta;
+			else if (onObject) this.velocity.z = 0;
 
-		if (this.moveLeft || this.moveRight) this.velocity.x -= this.direction.x * 400.0 * delta;
-		else if (onObject) this.velocity.x = 0;
+			if (this.moveLeft || this.moveRight) this.velocity.x -= this.direction.x * 400.0 * delta;
+			else if (onObject) this.velocity.x = 0;
 
-		if (onObject === true) {
+			if (onObject === true) {
 
-			this.velocity.y = Math.max(0, this.velocity.y);
+				this.velocity.y = Math.max(0, this.velocity.y);
+				this.canJump = true;
+			}
+			else {
+				this.canJump = false;
+			}
+
+			if (onObjective === true) {
+				console.log("has ganado");
+			}
+
+			this.controls.moveRight(- this.velocity.x * delta);
+			this.controls.moveForward(- this.velocity.z * delta);
+
+			this.controls.getObject().position.y += (this.velocity.y * delta); // new behavior
+
+			this.prevTime = time;
+
+		}
+			
+
+		if (this.startTheClock == true) {/* Crono */
+
+			if (!this.tempo.running)
+				this.tempo.start();
+
+			this.tempo.stop();
+
+			var timeElapsed = this.tempo.oldTime - this.totalTime;
+			this.tempo.start();
+
+			var secondsElapsed = timeElapsed / 1000;
+
+			var hours = Math.floor(secondsElapsed / 60 / 60);
+
+			var minutes = Math.floor(secondsElapsed / 60) - (hours * 60);
+
+			var seconds = secondsElapsed % 60;
+
+			var miliseconds = timeElapsed % 1000;
+
+			var formatted = hours + ':' + minutes + ':' + Math.trunc(seconds) + ":" + miliseconds.toFixed(0);
+
+			this.crono.innerHTML = formatted;
+		}
+
+		/* Fell off */
+		if (this.camera.position.y < -100) {
+			var startingSpot = this.level.getStartingSpot();
+			this.camera.position.set(startingSpot.x, startingSpot.y, startingSpot.z);
 			this.canJump = true;
+			this.camera.lookAt(this.level.getStartingView());
+			this.velocity.x = 0;
+			this.velocity.z = 0;
+			this.totalTime = this.tempo.oldTime;
 		}
-		else {
-			this.canJump = false;
-		}
 
-		if (onObjective === true) {
-			console.log("has ganado");
-        }
-
-		this.controls.moveRight(- this.velocity.x * delta);
-		this.controls.moveForward(- this.velocity.z * delta);
-
-		this.controls.getObject().position.y += (this.velocity.y * delta); // new behavior
-
-		this.prevTime = time;
-
+		
 	}
-
-	/* Fell off */
-	if (this.camera.position.y < -100) {
-		var startingSpot = this.level.getStartingSpot();
-		this.camera.position.set(startingSpot.x, startingSpot.y, startingSpot.z);
-		this.canJump = true;
-		this.camera.lookAt(this.level.getStartingView());
-		this.velocity.x = 0;
-		this.velocity.z = 0;
+	else {
+		TWEEN.update();
 		this.totalTime = this.tempo.oldTime;
+
+		if (this.controls.isLocked === true) {
+			this.level.setStartupDone(true);
+		}
 	}
-
-/* Crono */
-	if (!this.tempo.running)
-		this.tempo.start();
-
-	this.tempo.stop();
-
-	var timeElapsed = this.tempo.oldTime - this.totalTime;
-	this.tempo.start();
-
-	var secondsElapsed = timeElapsed / 1000;
-
-	var hours = Math.floor(secondsElapsed / 60 / 60);
-
-	var minutes = Math.floor(secondsElapsed / 60) - (hours * 60);
-
-	var seconds = secondsElapsed % 60;
-
-	var miliseconds = timeElapsed % 1000;
-
-	var formatted = hours + ':' + minutes + ':' + Math.trunc(seconds) + ":" + miliseconds.toFixed(0);
-
-	this.crono.innerHTML = formatted;
 
 	this.renderer.render(this.level.getScene(), this.camera);
-
-
-	}
+}
 }
 
 var escena = new Game();
