@@ -290,8 +290,9 @@ animate() {
 	}
 
 	this.renderer.render(this.level.getScene(), this.camera);
-	this.sound.setVolume(document.getElementById("musicRange").value / 100.0);
-	document.getElementById("musicRange").value = this.sound.getVolume()*100;
+
+	if (document.getElementById("musicRange").value > 0 && document.getElementById("musicRange").value < 101)
+		this.sound.setVolume(document.getElementById("musicRange").value / 100.0);
 }
 }
 
