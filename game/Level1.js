@@ -13,11 +13,15 @@ class Level1 extends Level {
 		//Plataforma inicial
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/moon.jpg'));
 
+
 		//Conector 1
 		this.scene.add(this.createPlatform(new THREE.Vector3(120, 80, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(190, 110, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPowerup(new THREE.Vector3(190,110,0),'resources/textures/powerup.png'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(260, 140, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPowerup(new THREE.Vector3(260,140,0),'resources/textures/powerup.png'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(340, 140, 50), 40, 2, 40, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPowerup(new THREE.Vector3(340,140,50),'resources/textures/powerup.png'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(450, 140, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
 
 		//Conector 2
@@ -31,6 +35,7 @@ class Level1 extends Level {
 		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -280), 50, 2, 50, 'resources/textures/moon.jpg'));
 
 		var objectivePlatform = this.createPlatform(new THREE.Vector3(1030, 55, 0), 400, 2, 400, 'resources/textures/moon.jpg');
+
 		this.objective.push(objectivePlatform);
 		this.scene.add(objectivePlatform);
 	}
@@ -60,13 +65,13 @@ class Level1 extends Level {
 		var that = this;
 		this.firstTween = new TWEEN.Tween(origin).to(ending, 10000).easing(TWEEN.Easing.Quadratic.InOut).onComplete(function () {
 			that.startupDone = true;
-			
+
 		}).onUpdate(function () {
             player.position.copy(origin);
 			player.lookAt(whereToLook);
 		});
 
 		this.firstTween.start();
-		
+
 	}
 }

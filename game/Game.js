@@ -9,7 +9,7 @@ class Game {
 
 		this.raycaster;
 		this.stats;
-		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
 		this.camera.position.y = 10; // player height
 
 		switch (document.getElementById("level").innerHTML) {
@@ -23,6 +23,7 @@ class Game {
 		this.moveLeft = false;
 		this.moveRight = false;
 		this.canJump = false;
+		this.doubleJump = true;
 
 		this.prevTime = performance.now();
 		this.velocity = new THREE.Vector3();
@@ -108,8 +109,13 @@ init() {
 				break;
 
 			case 32: // space
+			if (that.canJump === false && that.doubleJump === true){
+				that.velocity.y += 250;
+				that.doubleJump = true;
+			}
 				if (that.canJump === true) that.velocity.y += 250;
 				that.canJump = false;
+
 				break;
 
 			case 82: // r
@@ -121,6 +127,16 @@ init() {
 				that.velocity.z = 0;
 				that.totalTime = that.tempo.oldTime;
 				break;
+
+			case 16: //shift
+			that.direction.z = Number(that.moveForward) - Number(that.moveBackward);
+			that.direction.x = Number(that.moveRight) - Number(that.moveLeft);
+			that.direction.normalize(); // this ensures consistent movements in all directions
+
+			that.velocity.z -= that.direction.z * 800.0;
+
+			that.velocity.x -= that.direction.x * 800.0;
+			console.log("FIUUUUUUUUUUUM");
 
 		}
 
@@ -157,6 +173,7 @@ init() {
 	document.addEventListener('keydown', this.onKeyDown, false);
 	document.addEventListener('keyup', this.onKeyUp, false);
 
+
 	this.raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
 
 	this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -164,7 +181,15 @@ init() {
 	this.renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(this.renderer.domElement);
 
-	window.addEventListener('resize', this.onWindowResize, false);
+	//Resize window
+	window.addEventListener('resize', function () {
+
+		that.camera.aspect = window.innerWidth / window.innerHeight;
+		that.camera.updateProjectionMatrix();
+
+		that.renderer.setSize(window.innerWidth, window.innerHeight);
+
+	});
 
 
 	//Audio
@@ -181,15 +206,6 @@ init() {
 
 }
 
-onWindowResize() {
-
-	this.camera.aspect = window.innerWidth / window.innerHeight;
-	this.camera.updateProjectionMatrix();
-
-	this.renderer.setSize(window.innerWidth, window.innerHeight);
-
-}
-
 animate() {
 	requestAnimationFrame(() => this.animate());
 	this.stats.update();
@@ -200,6 +216,19 @@ animate() {
 			this.startTheClock = true;
 			this.raycaster.ray.origin.copy(this.controls.getObject().position);
 			this.raycaster.ray.origin.y -= 10;
+
+			var powerups = this.level.getPowerups();
+			for (var i=0; i<powerups.length; i++){
+				//powerups[i].lookAt(this.camera.position);
+				powerups[i].rotation.y += 0.05;
+				var playerOnPowerup = this.raycaster.intersectObject(powerups[i]);
+				var onPowerup = playerOnPowerup.length > 0;
+				if (onPowerup){
+					this.level.getScene().remove(powerups[i]);
+					this.level.getPowerups().splice(i,1);
+					console.log("POWEEEER");
+				}
+			}
 
 			var intersections = this.raycaster.intersectObjects(this.level.getCollidableObjects());
 			var playerOnObjective = this.raycaster.intersectObjects(this.level.getObjective());
@@ -270,7 +299,19 @@ animate() {
 
 			var miliseconds = timeElapsed % 1000;
 
-			var formatted = hours + ':' + minutes + ':' + Math.trunc(seconds) + ":" + miliseconds.toFixed(0);
+			var formatted = '';
+			var secondsFormatted = Math.trunc(seconds);
+			if (secondsFormatted < 10){
+				secondsFormatted = "0" + secondsFormatted;
+			}
+			var minutesFormatted = minutes;
+			if (minutesFormatted < 10){
+				minutesFormatted = "0" + minutesFormatted;
+			}
+			if (hours != 0)
+				formatted += hours + ':';
+
+			formatted += minutesFormatted + ":" + secondsFormatted + ":" + (miliseconds/10).toFixed(0);
 
 			this.crono.innerHTML = formatted;
 		}

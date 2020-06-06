@@ -1,6 +1,7 @@
 class Level {
 	constructor(player) {
 		this.objects = [];
+		this.powerups = [];
 		this.objective = [];
 		this.gravity;
 		this.cinematicCoordenates = [];
@@ -13,7 +14,7 @@ class Level {
 		this.createTexture();
 		this.createMusic();
 
-		//this.scene.fog = new THREE.Fog(0x000000, 0, 750);
+		//this.scene.fog = new THREE.Fog(0x000000, 0, 700);
 
 		this.light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
 		this.light.position.set(0.5, 1, 0.75);
@@ -30,7 +31,7 @@ class Level {
 	}
 
 	createLevel(player) {
-	
+
 	}
 
 	createPlatform(position, width, height, depth, texture) {
@@ -46,12 +47,40 @@ class Level {
 		return platform;
     }
 
+		createPowerup(position, texture) {
+			var powerupColliderGeometry =  new THREE.BoxBufferGeometry(10, 2, 10);
+			var powerupGeometry = new THREE.PlaneBufferGeometry(10,10,100,100);
+
+			var powerupTexture = new THREE.TextureLoader().load(texture);
+			var powerupMaterial = new THREE.MeshBasicMaterial( { map: powerupTexture } );
+			powerupMaterial.transparent = true;
+			var powerup = new THREE.Mesh(powerupGeometry,powerupMaterial);
+
+			var powerupColliderMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+			powerupColliderMaterial.colorWrite = false;
+			var powerupCollider = new THREE.Mesh(powerupColliderGeometry,powerupColliderMaterial);
+
+
+
+			powerup.material.side = THREE.DoubleSide;
+			powerup.position.set(0, 10, 0);
+
+
+			powerupCollider.position.set(position.x, position.y, position.z);
+
+			powerupCollider.add(powerup);
+
+			this.powerups.push(powerupCollider);
+
+			return powerupCollider;
+		}
+
 	createMusic() {
-		
+
 	}
 
 	createTexture() {
-		
+
 	}
 
 
@@ -69,6 +98,10 @@ class Level {
 
 	getObjective() {
 		return this.objective;
+	}
+
+	getPowerups() {
+		return this.powerups;
 	}
 
 	getScene() {
