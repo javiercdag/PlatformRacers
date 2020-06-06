@@ -17,11 +17,11 @@ class Level1 extends Level {
 		//Conector 1
 		this.scene.add(this.createPlatform(new THREE.Vector3(120, 80, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(190, 110, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPowerup(new THREE.Vector3(190,110,0),'resources/textures/powerup.png'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(190, 110, 0), 'resources/textures/dash.png', "DASH"));
 		this.scene.add(this.createPlatform(new THREE.Vector3(260, 140, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPowerup(new THREE.Vector3(260,140,0),'resources/textures/powerup.png'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(260, 140, 0), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 		this.scene.add(this.createPlatform(new THREE.Vector3(340, 140, 50), 40, 2, 40, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPowerup(new THREE.Vector3(340,140,50),'resources/textures/powerup.png'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(340, 140, 50), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 		this.scene.add(this.createPlatform(new THREE.Vector3(450, 140, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
 
 		//Conector 2

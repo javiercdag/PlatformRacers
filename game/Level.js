@@ -47,33 +47,33 @@ class Level {
 		return platform;
     }
 
-		createPowerup(position, texture) {
-			var powerupColliderGeometry =  new THREE.BoxBufferGeometry(10, 2, 10);
-			var powerupGeometry = new THREE.PlaneBufferGeometry(10,10,100,100);
+	createPowerup(position, texture, type) {
+		var powerupColliderGeometry =  new THREE.BoxBufferGeometry(10, 2, 10);
+		var powerupGeometry = new THREE.PlaneBufferGeometry(10,10,100,100);
 
-			var powerupTexture = new THREE.TextureLoader().load(texture);
-			var powerupMaterial = new THREE.MeshBasicMaterial( { map: powerupTexture } );
-			powerupMaterial.transparent = true;
-			var powerup = new THREE.Mesh(powerupGeometry,powerupMaterial);
+		var powerupTexture = new THREE.TextureLoader().load(texture);
+		var powerupMaterial = new THREE.MeshBasicMaterial( { map: powerupTexture } );
+		powerupMaterial.transparent = true;
+		var powerup = new THREE.Mesh(powerupGeometry,powerupMaterial);
 
-			var powerupColliderMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
-			powerupColliderMaterial.colorWrite = false;
-			var powerupCollider = new THREE.Mesh(powerupColliderGeometry,powerupColliderMaterial);
-
-
-
-			powerup.material.side = THREE.DoubleSide;
-			powerup.position.set(0, 10, 0);
+		var powerupColliderMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+		powerupColliderMaterial.colorWrite = false;
+		var powerupCollider = new THREE.Mesh(powerupColliderGeometry,powerupColliderMaterial);
 
 
-			powerupCollider.position.set(position.x, position.y, position.z);
 
-			powerupCollider.add(powerup);
+		powerup.material.side = THREE.DoubleSide;
+		powerup.position.set(0, 10, 0);
 
-			this.powerups.push(powerupCollider);
 
-			return powerupCollider;
-		}
+		powerupCollider.position.set(position.x, position.y, position.z);
+
+		powerupCollider.add(powerup);
+
+		this.powerups.push([powerupCollider, type]);
+
+		return powerupCollider;
+	}
 
 	createMusic() {
 

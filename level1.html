@@ -11,7 +11,7 @@
 		<div id="blocker">
 
 			<div id="instructions">
-				<span class="pauseTitle">Game Paused - World 1</span><br/><br/><br />
+				<span class="pauseTitle">Game Paused - World 1</span><br /><br /><br />
 				<span id='resume'>Resume</span></br>
 				<a href="index.html"><p>Return to main screen</p></a>
 				<br />
@@ -23,13 +23,27 @@
 				Pause: ESC<br />
 				</br>
 				Music volume:<br />
-				<input type="range" min="0" max="100" value ="50"class="slider" id="musicRange">
+				<input type="range" min="0" max="100" value="50" class="slider" id="musicRange">
 				</br>
 
 			</div>
 
+			<div id="levelFinished">
+				<span class="pauseTitle">You have completed World 1!</span><br /><br /><br />
+				<span id='goAgain'>Restart</span></br>
+				<a href="index.html"><p>Return to main screen</p></a>
+				<br />
+
+			</div>
+
+		</div>
+
+		<div id="powerups">
+			<img id="dash" />
+			<img id="doubleJump" />
 		</div>
 		<div id="crono"></div>
+		<div id="highscore">Highscore: --:--:--</div>
 		<div id="stats"></div>
 		<script type="text/javascript" src="../libs/Tween.js"></script>
 		<script type="text/javascript" src="libs/three.js"></script>

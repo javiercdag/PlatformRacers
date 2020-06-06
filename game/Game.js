@@ -23,7 +23,15 @@ class Game {
 		this.moveLeft = false;
 		this.moveRight = false;
 		this.canJump = false;
-		this.doubleJump = true;
+		this.canDoubleJump = false;
+		this.canDash = false;
+		this.dashImage = "resources/textures/dash.png";
+		this.dashImageCD = "resources/textures/dashOff.png";
+		this.doubleJumpImage = "resources/textures/doubleJump.png";
+		this.doubleJumpImageCD = "resources/textures/doubleJumpOff.png";
+		this.dashDiv = document.getElementById("dash");
+		this.doubleJumpDiv = document.getElementById("doubleJump");
+		this.gameFinished = false;
 
 		this.prevTime = performance.now();
 		this.velocity = new THREE.Vector3();
@@ -35,6 +43,7 @@ class Game {
 		this.tempo = new THREE.Clock(false);
 		this.totalTime = 0; //Controls the total time, to restart the chrono
 		this.startTheClock = false;
+		this.highscore = 999999999999.0;
 
 		this.init();
 		this.animate();
@@ -46,6 +55,8 @@ class Game {
 init() {
 
 	this.controls = new PointerLockControls(this.camera, document.body);
+	this.dashDiv.src = this.dashImageCD;
+	this.doubleJumpDiv.src = this.doubleJumpImageCD;
 	this.stats = new Stats();
 	var container = document.getElementById("stats");
 
@@ -62,23 +73,43 @@ init() {
 	}, false);
 
 	var that = this;
-	/*instructions.addEventListener('click', function () {
 
+	document.getElementById("goAgain").addEventListener('click', function () {
+		var startingSpot = that.level.getStartingSpot();
+
+		that.gameFinished = false;
+		that.camera.position.set(startingSpot.x, startingSpot.y, startingSpot.z);
+		that.canJump = true;
+		that.camera.lookAt(that.level.getStartingView());
+		that.velocity.x = 0;
+		that.velocity.z = 0;
+		that.totalTime = that.tempo.oldTime;
+		that.canDash = false;
+		that.dashDiv.src = that.dashImageCD;
+		that.canDoubleJump = false;
+		that.doubleJumpDiv.src = that.doubleJumpImageCD;
+		document.getElementById("crono").style.display = "block";
 		that.controls.lock();
 
-	}, false);*/
+	}, false);
+
+	
 
 	this.controls.addEventListener('lock', function () {
-
+		document.getElementById("levelFinished").style.display = 'none';
 		instructions.style.display = 'none';
 		blocker.style.display = 'none';
-
 	});
 
 	this.controls.addEventListener('unlock', function () {
-
-		blocker.style.display = 'block';
-		instructions.style.display = '';
+		if (that.gameFinished) {
+			blocker.style.display = 'block';
+			document.getElementById("levelFinished").style.display = 'block';
+		}
+		else {
+			blocker.style.display = 'block';
+			instructions.style.display = '';
+		}
 
 	});
 
@@ -109,11 +140,14 @@ init() {
 				break;
 
 			case 32: // space
-			if (that.canJump === false && that.doubleJump === true){
-				that.velocity.y += 250;
-				that.doubleJump = true;
-			}
+				if (that.canJump === false && that.canDoubleJump === true){
+					that.velocity.y += 250;
+					that.canDoubleJump = false;
+					that.doubleJumpDiv.src = that.doubleJumpImageCD;
+				}
+
 				if (that.canJump === true) that.velocity.y += 250;
+
 				that.canJump = false;
 
 				break;
@@ -126,17 +160,26 @@ init() {
 				that.velocity.x = 0;
 				that.velocity.z = 0;
 				that.totalTime = that.tempo.oldTime;
+				that.canDash = false;
+				that.dashDiv.src = that.dashImageCD;
+				that.canDoubleJump = false;
+				that.doubleJumpDiv.src = that.doubleJumpImageCD;
 				break;
 
 			case 16: //shift
-			that.direction.z = Number(that.moveForward) - Number(that.moveBackward);
-			that.direction.x = Number(that.moveRight) - Number(that.moveLeft);
-			that.direction.normalize(); // this ensures consistent movements in all directions
+				if (that.canDash) {
+					that.direction.z = Number(that.moveForward) - Number(that.moveBackward);
+					that.direction.x = Number(that.moveRight) - Number(that.moveLeft);
+					that.direction.normalize(); // this ensures consistent movements in all directions
 
-			that.velocity.z -= that.direction.z * 800.0;
+					that.velocity.z -= that.direction.z * 800.0;
 
-			that.velocity.x -= that.direction.x * 800.0;
-			console.log("FIUUUUUUUUUUUM");
+					that.velocity.x -= that.direction.x * 800.0;
+					that.canDash = false;
+					that.dashDiv.src = that.dashImageCD;
+				}
+
+				break;
 
 		}
 
@@ -219,14 +262,20 @@ animate() {
 
 			var powerups = this.level.getPowerups();
 			for (var i=0; i<powerups.length; i++){
-				//powerups[i].lookAt(this.camera.position);
-				powerups[i].rotation.y += 0.05;
-				var playerOnPowerup = this.raycaster.intersectObject(powerups[i]);
+				powerups[i][0].rotation.y += 0.05;
+				var playerOnPowerup = this.raycaster.intersectObject(powerups[i][0]);
 				var onPowerup = playerOnPowerup.length > 0;
-				if (onPowerup){
-					this.level.getScene().remove(powerups[i]);
-					this.level.getPowerups().splice(i,1);
-					console.log("POWEEEER");
+				if (onPowerup) {
+					switch (powerups[i][1]) {
+						case "DASH":
+							this.canDash = true;
+							this.dashDiv.src = this.dashImage;
+							break;
+						case "DOUBLE-JUMP":
+							this.canDoubleJump = true;
+							this.doubleJumpDiv.src = this.doubleJumpImage;
+							break;
+                    }
 				}
 			}
 
@@ -266,7 +315,39 @@ animate() {
 			}
 
 			if (onObjective === true) { //endgame
-				console.log("has ganado");
+				this.gameFinished = true;
+				this.controls.unlock();
+				document.getElementById("crono").style.display = "none";
+				var timeElapsed = this.tempo.oldTime - this.totalTime;
+
+				if (timeElapsed < this.highscore) {
+					this.highscore = timeElapsed;
+					var secondsElapsed = timeElapsed / 1000;
+
+					var hours = Math.floor(secondsElapsed / 60 / 60);
+
+					var minutes = Math.floor(secondsElapsed / 60) - (hours * 60);
+
+					var seconds = secondsElapsed % 60;
+
+					var miliseconds = timeElapsed % 1000;
+
+					var formatted = '';
+					var secondsFormatted = Math.trunc(seconds);
+					if (secondsFormatted < 10) {
+						secondsFormatted = "0" + secondsFormatted;
+					}
+					var minutesFormatted = minutes;
+					if (minutesFormatted < 10) {
+						minutesFormatted = "0" + minutesFormatted;
+					}
+					if (hours != 0)
+						formatted += hours + ':';
+
+					formatted += "Highscore: " + minutesFormatted + ":" + secondsFormatted + ":" + (miliseconds / 10).toFixed(0);
+
+					document.getElementById("highscore").innerHTML = formatted;
+                }
 			}
 
 			this.controls.moveRight(- this.velocity.x * delta);
@@ -325,6 +406,10 @@ animate() {
 			this.velocity.x = 0;
 			this.velocity.z = 0;
 			this.totalTime = this.tempo.oldTime;
+			this.canDash = false;
+			this.dashDiv.src = this.dashImageCD;
+			this.canDoubleJump = false;
+			this.doubleJumpDiv.src = this.doubleJumpImageCD;
 		}
 
 
@@ -341,6 +426,7 @@ animate() {
 
 	if (document.getElementById("musicRange").value >= 0 && document.getElementById("musicRange").value <= 100)
 		this.sound.setVolume(document.getElementById("musicRange").value / 100.0);
+
 }
 }
 

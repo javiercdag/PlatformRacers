@@ -8,6 +8,21 @@ body {
 	overscroll-behavior: none;
 }
 
+#powerups{
+	position: absolute;
+	bottom: 5%;
+	right: 1.5%;
+}
+
+#powerups img {
+	width: 10%;
+	height: 10%;
+}
+
+#goAgain {
+	color: yellow;
+}
+
 #level{
 	display:none;
 }
@@ -42,6 +57,31 @@ body {
 	cursor: pointer;
 }
 
+#levelFinished {
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	box-orient: horizontal;
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	box-pack: center;
+	-webkit-box-align: center;
+	-moz-box-align: center;
+	box-align: center;
+	color: #ffffff;
+	text-align: center;
+	font-family: Arial;
+	font-size: 50px;
+	line-height: 24px;
+	cursor: pointer;
+	vertical-align:center;
+	margin-top: 15%;
+}
+
 #crono{
 	position: absolute;
 	width:200;
@@ -52,6 +92,17 @@ body {
 	text-align:center;
 	color:white;
 
+}
+
+#highscore {
+	position: absolute;
+	width: 200;
+	height: 100;
+	top: 2%;
+	right:3%;
+	font-size: 300%;
+	text-align: center;
+	color: white;
 }
 
 a {
