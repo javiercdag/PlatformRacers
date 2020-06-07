@@ -2,6 +2,7 @@ class Level {
 	constructor(player) {
 		this.objects = [];
 		this.powerups = [];
+		this.indicators = [];
 		this.objective = [];
 		this.gravity;
 		this.cinematicCoordenates = [];
@@ -75,6 +76,21 @@ class Level {
 		return powerupCollider;
 	}
 
+	createIndicator(position,texture) {
+		var indicatorGeometry = new THREE.PlaneBufferGeometry(10,10,100,100);
+		var indicatorTexture = new THREE.TextureLoader().load(texture);
+		var indicatorMaterial = new THREE.MeshBasicMaterial( { map: indicatorTexture } );
+		indicatorMaterial.transparent = true;
+		var indicator = new THREE.Mesh(indicatorGeometry,indicatorMaterial);
+		indicator.material.side = THREE.DoubleSide;
+
+		indicator.position.set(position.x, position.y, position.z);
+
+		this.indicators.push(indicator);
+
+		return indicator;
+	}
+
 	createMusic() {
 
 	}
@@ -90,6 +106,10 @@ class Level {
 
 	getGravity() {
 		return this.gravity;
+	}
+
+	getIndicators() {
+		return this.indicators;
 	}
 
 	getMusic() {

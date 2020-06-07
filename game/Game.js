@@ -16,7 +16,10 @@ class Game {
 			case "1":
 				this.level = new Level1(this.camera);
 				break;
-        }
+			case "2":
+				this.level = new Level2(this.camera);
+				break;
+	   }
 
 		this.moveForward = false;
 		this.moveBackward = false;
@@ -93,7 +96,7 @@ init() {
 
 	}, false);
 
-	
+
 
 	this.controls.addEventListener('lock', function () {
 		document.getElementById("levelFinished").style.display = 'none';
@@ -277,6 +280,11 @@ animate() {
 							break;
                     }
 				}
+			}
+
+			var indicators = this.level.getIndicators();
+				for (var i=0; i<indicators.length;i++){
+					indicators[i].lookAt(this.controls.getObject().position);
 			}
 
 			var intersections = this.raycaster.intersectObjects(this.level.getCollidableObjects());

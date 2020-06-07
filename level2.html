@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Level 2</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="styles/main.css">
+		<div id="level">2</div>
+	</head>
+	<body>
+		<div id="blocker">
+
+			<div id="instructions">
+				<span class="pauseTitle">Game Paused - World 2</span><br /><br /><br />
+				<span id='resume'>Resume</span></br>
+				<a href="index.html"><p>Return to main screen</p></a>
+				<br />
+				CONTROLS:<br />
+				Move: WASD<br />
+				Jump: SPACE<br />
+				Look: MOUSE<br />
+				Restart: R<br />
+				Pause: ESC<br />
+				</br>
+				Music volume:<br />
+				<input type="range" min="0" max="100" value="50" class="slider" id="musicRange">
+				</br>
+
+			</div>
+
+			<div id="levelFinished">
+				<span class="pauseTitle">You have completed World 2!</span><br /><br /><br />
+				<span id='goAgain'>Restart</span></br>
+				<a href="index.html"><p>Return to main screen</p></a>
+				<br />
+
+			</div>
+
+		</div>
+
+		<div id="powerups">
+			<img id="dash" />
+			<img id="doubleJump" />
+		</div>
+		<div id="crono"></div>
+		<div id="highscore">Highscore: --:--:--</div>
+		<div id="stats"></div>
+		<script type="text/javascript" src="../libs/Tween.js"></script>
+		<script type="text/javascript" src="libs/three.js"></script>
+		<script type="text/javascript" src="game/Level.js"></script>
+		<script type="text/javascript" src="game/Level2.js"></script>
+		<script type="module" src="game/Game.js"></script>
+	</body>
+</html>
