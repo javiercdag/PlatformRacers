@@ -35,7 +35,7 @@ class Level2 extends Level {
     this.scene.add(this.createPlatform(new THREE.Vector3(-595, 240, 455), 30, 2, 30, 'resources/textures/wood.jpg'));
 
     this.scene.add(this.createPowerup(new THREE.Vector3(-595, 240, 455), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
-    this.scene.add(this.createIndicator(new THREE.Vector3(-610,270,505), 'resources/textures/doubleJumpRequired.jpg'));
+    this.scene.add(this.createIndicator(new THREE.Vector3(-610,270,505), 'resources/textures/doubleJumpRequired.jpg', 10, false));
     this.scene.add(this.createPlatform(new THREE.Vector3(-595, 240, 555), 30, 2, 50, 'resources/textures/wood.jpg'));
 
     this.scene.add(this.createPlatform(new THREE.Vector3(-595, 240, 655), 30, 2, 50, 'resources/textures/wood.jpg'));
@@ -43,7 +43,7 @@ class Level2 extends Level {
     this.scene.add(this.createPlatform(new THREE.Vector3(-595, 240, 855), 30, 2, 50, 'resources/textures/wood.jpg'));
     this.scene.add(this.createPlatform(new THREE.Vector3(-595, 240, 955), 30, 2, 50, 'resources/textures/wood.jpg'));
     this.scene.add(this.createPowerup(new THREE.Vector3(-595, 240, 955), 'resources/textures/dash.png', "DASH"));
-    this.scene.add(this.createIndicator(new THREE.Vector3(-595,270,1000), 'resources/textures/dashRequired.jpg'));
+    this.scene.add(this.createIndicator(new THREE.Vector3(-595,270,1000), 'resources/textures/dashRequired.jpg', 10, false));
 
     this.scene.add(this.createPlatform(new THREE.Vector3(-595, 230, 1200), 30, 2, 90, 'resources/textures/wood.jpg'));
     this.scene.add(this.createPlatform(new THREE.Vector3(-515, 230, 1200), 40, 2, 40, 'resources/textures/wood.jpg'));
@@ -74,7 +74,7 @@ class Level2 extends Level {
 
 
     //Final
-    this.scene.add(this.createIndicator(new THREE.Vector3(455,130,1200), 'resources/textures/doubleJumpRequired.jpg'));
+    this.scene.add(this.createIndicator(new THREE.Vector3(455,130,1200), 'resources/textures/doubleJumpRequired.jpg', 10, false));
     this.scene.add(this.createPlatform(new THREE.Vector3(455, 160, 1200), 50, 2, 50, 'resources/textures/wood.jpg'));
     this.scene.add(this.createPlatform(new THREE.Vector3(510, 170, 1275), 50, 2, 50, 'resources/textures/wood.jpg'));
     this.scene.add(this.createPlatform(new THREE.Vector3(510, 180, 1350), 50, 2, 50, 'resources/textures/wood.jpg'));
@@ -100,7 +100,7 @@ class Level2 extends Level {
 		var whereToLook = this.cinematicCoordenates[0][2];
 
 		var that = this;
-		this.firstTween = new TWEEN.Tween(origin).to(ending, 10000).easing(TWEEN.Easing.Quadratic.InOut).onComplete(function () {
+        this.startupCinematic = new TWEEN.Tween(origin).to(ending, 10000).easing(TWEEN.Easing.Quadratic.InOut).onComplete(function () {
 			that.startupDone = true;
 
 		}).onUpdate(function () {
@@ -108,7 +108,7 @@ class Level2 extends Level {
 			player.lookAt(whereToLook);
 		});
 
-		this.firstTween.start();
+        this.startupCinematic.start();
 
 	}
 }

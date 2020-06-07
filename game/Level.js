@@ -1,12 +1,16 @@
 class Level {
 	constructor(player) {
 		this.objects = [];
+		this.bouncingPlatforms = [];
+		this.speedPlatforms = [];
 		this.powerups = [];
 		this.indicators = [];
+		this.rotatingIndicators = [];
 		this.objective = [];
 		this.gravity;
 		this.cinematicCoordenates = [];
 		this.startupDone = false;
+		this.startupCinematic;
 
 		this.scene = new THREE.Scene();
 		this.startingSpot;
@@ -31,8 +35,68 @@ class Level {
 		this.scene.add(element);
 	}
 
+	createIndicator(position, texture, size, rotate) {
+		var indicatorGeometry = new THREE.PlaneBufferGeometry(size, size, 100, 100);
+		var indicatorTexture = new THREE.TextureLoader().load(texture);
+		var indicatorMaterial = new THREE.MeshBasicMaterial({ map: indicatorTexture });
+		indicatorMaterial.transparent = true;
+		var indicator = new THREE.Mesh(indicatorGeometry, indicatorMaterial);
+		indicator.material.side = THREE.DoubleSide;
+
+		indicator.position.set(position.x, position.y, position.z);
+
+		if (rotate)
+			this.rotatingIndicators.push(indicator);
+		else
+			this.indicators.push(indicator);
+
+		return indicator;
+	}
+
 	createLevel(player) {
 
+	}
+
+	createBouncingPlatform(position, width, height, depth) {
+		var platform = this.createPlatform(position, width, height, depth, 'resources/textures/bouncing.png');
+
+		this.bouncingPlatforms.push(platform);
+		var indicatorNE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
+		var indicatorNW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
+		var indicatorSE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
+		var indicatorSW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
+
+		this.scene.add(indicatorNE);
+		this.scene.add(indicatorNW);
+		this.scene.add(indicatorSE);
+		this.scene.add(indicatorSW);
+
+		return platform;
+    }
+
+	createMovingPlatform(initialPosition, endingPosition, width, height, depth, texture, time) {
+		var platform = this.createPlatform(initialPosition, width, height, depth, texture);
+
+		var origin = initialPosition;
+		var end = endingPosition;
+
+		var that = this;
+		var platformToEnd = new TWEEN.Tween(origin).to(end, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
+			platform.position.set(origin.x, origin.y, origin.z);
+		});
+
+		var origin2 = JSON.parse(JSON.stringify(endingPosition));
+		var end2 = JSON.parse(JSON.stringify(initialPosition));
+
+		var platformToOrigin = new TWEEN.Tween(origin2).to(end2, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
+			platform.position.set(origin2.x, origin2.y, origin2.z);
+		});
+
+		platformToEnd.chain(platformToOrigin);
+		platformToOrigin.chain(platformToEnd);
+		platformToEnd.start();
+
+		return platform;
 	}
 
 	createPlatform(position, width, height, depth, texture) {
@@ -46,10 +110,27 @@ class Level {
 		this.objects.push(platform);
 
 		return platform;
+	}
+
+	createSpeedPlatform(position, width, height, depth) {
+		var platform = this.createPlatform(position, width, height, depth, 'resources/textures/speedPlatform.png');
+
+		this.speedPlatforms.push(platform);
+		var indicatorNE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/speedFX.png', 7, true);
+		var indicatorNW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/speedFX.png', 7, true);
+		var indicatorSE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/speedFX.png', 7, true);
+		var indicatorSW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/speedFX.png', 7, true);
+
+		this.scene.add(indicatorNE);
+		this.scene.add(indicatorNW);
+		this.scene.add(indicatorSE);
+		this.scene.add(indicatorSW);
+
+		return platform;
     }
 
 	createPowerup(position, texture, type) {
-		var powerupColliderGeometry =  new THREE.BoxBufferGeometry(10, 2, 10);
+		var powerupColliderGeometry =  new THREE.BoxBufferGeometry(15, 2, 15);
 		var powerupGeometry = new THREE.PlaneBufferGeometry(10,10,100,100);
 
 		var powerupTexture = new THREE.TextureLoader().load(texture);
@@ -76,21 +157,6 @@ class Level {
 		return powerupCollider;
 	}
 
-	createIndicator(position,texture) {
-		var indicatorGeometry = new THREE.PlaneBufferGeometry(10,10,100,100);
-		var indicatorTexture = new THREE.TextureLoader().load(texture);
-		var indicatorMaterial = new THREE.MeshBasicMaterial( { map: indicatorTexture } );
-		indicatorMaterial.transparent = true;
-		var indicator = new THREE.Mesh(indicatorGeometry,indicatorMaterial);
-		indicator.material.side = THREE.DoubleSide;
-
-		indicator.position.set(position.x, position.y, position.z);
-
-		this.indicators.push(indicator);
-
-		return indicator;
-	}
-
 	createMusic() {
 
 	}
@@ -99,6 +165,9 @@ class Level {
 
 	}
 
+	getBouncingPlatforms() {
+		return this.bouncingPlatforms;
+    }
 
 	getCollidableObjects() {
 		return this.objects;
@@ -124,8 +193,16 @@ class Level {
 		return this.powerups;
 	}
 
+	getRotatingIndicators() {
+		return this.rotatingIndicators;
+    }
+
 	getScene() {
 		return this.scene;
+	}
+
+	getSpeedPlatforms() {
+		return this.speedPlatforms;
 	}
 
 	getStartingSpot() {
@@ -134,6 +211,10 @@ class Level {
 
 	getStartingView() {
 		return this.startingView;
+	}
+
+	getStartupCinematic() {
+		return this.startupCinematic;
 	}
 
 	isStartupDone() {

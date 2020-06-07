@@ -13,6 +13,9 @@ class Game {
 		this.camera.position.y = 10; // player height
 
 		switch (document.getElementById("level").innerHTML) {
+			case "0":
+				this.level = new Level0(this.camera);
+				break;
 			case "1":
 				this.level = new Level1(this.camera);
 				break;
@@ -287,11 +290,21 @@ animate() {
 					indicators[i].lookAt(this.controls.getObject().position);
 			}
 
+			var rotatingIndicators = this.level.getRotatingIndicators();
+			for (var i = 0; i < rotatingIndicators.length; i++) {
+				rotatingIndicators[i].rotation.y += 0.05;
+			}
+
+
 			var intersections = this.raycaster.intersectObjects(this.level.getCollidableObjects());
 			var playerOnObjective = this.raycaster.intersectObjects(this.level.getObjective());
+			var playerOnBouncingPlatform = this.raycaster.intersectObjects(this.level.getBouncingPlatforms());
+			var playerOnSpeedPlatform = this.raycaster.intersectObjects(this.level.getSpeedPlatforms());
 
 			var onObject = intersections.length > 0;
 			var onObjective = playerOnObjective.length > 0;
+			var onBouncingPlatform = playerOnBouncingPlatform.length > 0;
+			var onSpeedPlatform = playerOnSpeedPlatform.length > 0;
 
 			var time = performance.now();
 			var delta = (time - this.prevTime) / 1000;
@@ -307,11 +320,25 @@ animate() {
 			this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
 			this.direction.normalize(); // this ensures consistent movements in all directions
 
-			if (this.moveForward || this.moveBackward) this.velocity.z -= this.direction.z * 400.0 * delta;
+			if (this.moveForward || this.moveBackward) {
+				this.velocity.z -= this.direction.z * 400.0 * delta;
+
+				if (onSpeedPlatform)
+					this.velocity.z -= this.direction.z * 600.0 * delta;
+			}
 			else if (onObject) this.velocity.z = 0;
 
-			if (this.moveLeft || this.moveRight) this.velocity.x -= this.direction.x * 400.0 * delta;
+			if (this.moveLeft || this.moveRight) {
+				this.velocity.x -= this.direction.x * 400.0 * delta;
+
+				if (onSpeedPlatform)
+					this.velocity.x -= this.direction.x * 600.0 * delta;
+			}
 			else if (onObject) this.velocity.x = 0;
+
+
+			if (onBouncingPlatform)
+				this.velocity.y = Math.max(this.velocity.y, -this.velocity.y);
 
 			if (onObject === true) {
 
@@ -423,10 +450,10 @@ animate() {
 
 	}
 	else {
-		TWEEN.update();
 
 		if (this.controls.isLocked === true) {
 			this.level.setStartupDone(true);
+			this.level.getStartupCinematic().stop();
 		}
 	}
 
@@ -434,7 +461,7 @@ animate() {
 
 	if (document.getElementById("musicRange").value >= 0 && document.getElementById("musicRange").value <= 100)
 		this.sound.setVolume(document.getElementById("musicRange").value / 100.0);
-
+	TWEEN.update();
 }
 }
 

@@ -13,7 +13,6 @@ class Level1 extends Level {
 		//Plataforma inicial
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/moon.jpg'));
 
-
 		//Conector 1
 		this.scene.add(this.createPlatform(new THREE.Vector3(120, 80, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(190, 110, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
@@ -25,14 +24,13 @@ class Level1 extends Level {
 		this.scene.add(this.createPlatform(new THREE.Vector3(450, 140, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
 
 		//Conector 2
-		this.scene.add(this.createPlatform(new THREE.Vector3(540, 55, 0), 30, 2, 200, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(620, 55, -200), 30, 2, 200, 'resources/textures/moon.jpg'));
+		this.scene.add(this.createBouncingPlatform(new THREE.Vector3(540, 55, -20), 30, 2, 30));
+		this.scene.add(this.createSpeedPlatform(new THREE.Vector3(620, 55, -200), 30, 2, 200));
 		this.scene.add(this.createPlatform(new THREE.Vector3(700, 55, -420), 30, 2, 200, 'resources/textures/moon.jpg'));
 
 		this.scene.add(this.createPlatform(new THREE.Vector3(780, 55, -480), 30, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -450), 30, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -350), 30, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -280), 50, 2, 50, 'resources/textures/moon.jpg'));
+		this.scene.add(this.createMovingPlatform(new THREE.Vector3(850, 55, -370), new THREE.Vector3(850, 55, -280), 40, 2, 40, 'resources/textures/moon.jpg', 3000));
 
 		var objectivePlatform = this.createPlatform(new THREE.Vector3(1030, 55, 0), 400, 2, 400, 'resources/textures/moon.jpg');
 
@@ -63,7 +61,7 @@ class Level1 extends Level {
 		var whereToLook = this.cinematicCoordenates[0][2];
 
 		var that = this;
-		this.firstTween = new TWEEN.Tween(origin).to(ending, 10000).easing(TWEEN.Easing.Quadratic.InOut).onComplete(function () {
+		this.startupCinematic = new TWEEN.Tween(origin).to(ending, 10000).easing(TWEEN.Easing.Quadratic.InOut).onComplete(function () {
 			that.startupDone = true;
 
 		}).onUpdate(function () {
@@ -71,7 +69,7 @@ class Level1 extends Level {
 			player.lookAt(whereToLook);
 		});
 
-		this.firstTween.start();
+		this.startupCinematic.start();
 
 	}
 }
