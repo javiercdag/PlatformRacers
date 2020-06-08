@@ -74,22 +74,59 @@ class Level {
 		return platform;
     }
 
-	createMovingPlatform(initialPosition, endingPosition, width, height, depth, texture, time) {
+	// In order to allow the platform to carry the player when it moves, we've had to make some sacrifices in terms on both code readability
+	// and code efficiency inside of this function.
+	createMovingPlatform(initialPosition, endingPosition, width, height, depth, texture, time, player) {
 		var platform = this.createPlatform(initialPosition, width, height, depth, texture);
 
-		var origin = initialPosition;
-		var end = endingPosition;
-
+		var origin = JSON.parse(JSON.stringify(initialPosition));
+		var end = JSON.parse(JSON.stringify(endingPosition));
+		var prevOrigin = JSON.parse(JSON.stringify(origin));
+		var desplazamiento = new THREE.Vector3(0, 0, 0);
 		var that = this;
+
 		var platformToEnd = new TWEEN.Tween(origin).to(end, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
 			platform.position.set(origin.x, origin.y, origin.z);
+			desplazamiento.x = origin.x - prevOrigin.x;
+			desplazamiento.y = origin.y - prevOrigin.y;
+			desplazamiento.z = origin.z - prevOrigin.z;
+
+			if (player.position.y > (origin.y + 18) && player.position.y < (origin.y + 22) && player.position.x > (origin.x - width / 2.0) && player.position.x < (origin.x + width / 2.0)
+				&& player.position.z > (origin.z - depth / 2.0) && player.position.z < (origin.z + depth / 2.0)) { // player in platform
+
+				if (desplazamiento.x < 1 && desplazamiento.x > -1 && desplazamiento.y < 1 && desplazamiento.y > -1 && desplazamiento.z < 1 && desplazamiento.z > -1) {
+					player.position.x += desplazamiento.x;
+					player.position.y += desplazamiento.y;
+					player.position.z += desplazamiento.z;
+				}
+			}
+
+			prevOrigin = JSON.parse(JSON.stringify(origin));
 		});
 
 		var origin2 = JSON.parse(JSON.stringify(endingPosition));
 		var end2 = JSON.parse(JSON.stringify(initialPosition));
+		var prevOrigin2 = JSON.parse(JSON.stringify(origin2));
+		var desplazamiento2 = new THREE.Vector3(0, 0, 0);
 
 		var platformToOrigin = new TWEEN.Tween(origin2).to(end2, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
 			platform.position.set(origin2.x, origin2.y, origin2.z);
+
+			desplazamiento2.x = origin2.x - prevOrigin2.x;
+			desplazamiento2.y = origin2.y - prevOrigin2.y;
+			desplazamiento2.z = origin2.z - prevOrigin2.z;
+
+			if (player.position.y > (origin2.y + 18) && player.position.y < (origin2.y + 22) && player.position.x > (origin2.x - width / 2.0) && player.position.x < (origin2.x + width / 2.0)
+				&& player.position.z > (origin2.z - depth / 2.0) && player.position.z < (origin2.z + depth / 2.0)) { // player in platform
+
+				if (desplazamiento2.x < 1 && desplazamiento2.x > -1 && desplazamiento2.y < 1 && desplazamiento2.y > -1 && desplazamiento2.z < 1 && desplazamiento2.z > -1) {
+					player.position.x += desplazamiento2.x;
+					player.position.y += desplazamiento2.y;
+					player.position.z += desplazamiento2.z;
+				}
+			}
+			
+			prevOrigin2 = JSON.parse(JSON.stringify(origin2));
 		});
 
 		platformToEnd.chain(platformToOrigin);

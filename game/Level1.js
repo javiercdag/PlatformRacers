@@ -31,7 +31,7 @@ class Level1 extends Level {
 
 		this.scene.add(this.createPlatform(new THREE.Vector3(780, 55, -480), 30, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -450), 30, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createMovingPlatform(new THREE.Vector3(850, 55, -370), new THREE.Vector3(850, 55, -280), 40, 2, 40, 'resources/textures/moon.jpg', 3000));
+		this.scene.add(this.createMovingPlatform(new THREE.Vector3(850, 55, -370), new THREE.Vector3(850, 55, -280), 40, 2, 40, 'resources/textures/moon.jpg', 3000, player));
 
 		// Objective
 		var objectivePlatform = this.createPlatform(new THREE.Vector3(1030, 55, 0), 400, 2, 400, 'resources/textures/crown.png');

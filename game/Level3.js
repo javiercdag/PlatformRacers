@@ -38,8 +38,8 @@ class Level3 extends Level {
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 1550), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
 
 		// Moving segment
-		this.scene.add(this.createMovingPlatform(new THREE.Vector3(50, 70, 1640), new THREE.Vector3(-50, 70, 1800), 60, 2, 60, 'resources/textures/blueStone.jpg', 5000));
-		this.scene.add(this.createMovingPlatform(new THREE.Vector3(50, 70, 2000), new THREE.Vector3(-50, 70, 1880), 60, 2, 60, 'resources/textures/blueStone.jpg', 5000));
+		this.scene.add(this.createMovingPlatform(new THREE.Vector3(50, 70, 1640), new THREE.Vector3(-50, 70, 1800), 60, 2, 60, 'resources/textures/blueStone.jpg', 5000, player));
+		this.scene.add(this.createMovingPlatform(new THREE.Vector3(50, 70, 2000), new THREE.Vector3(-50, 70, 1880), 60, 2, 60, 'resources/textures/blueStone.jpg', 5000, player));
 
 		// Staircase
 		this.scene.add(this.createPlatform(new THREE.Vector3(80, 90, 2090), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
