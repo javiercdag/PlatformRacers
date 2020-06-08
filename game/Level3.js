@@ -45,15 +45,15 @@ class Level3 extends Level {
 		this.scene.add(this.createPlatform(new THREE.Vector3(80, 90, 2090), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(120, 90, 2090), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
 		this.scene.add(this.createPowerup(new THREE.Vector3(120, 90, 2090), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
-		this.scene.add(this.createPlatform(new THREE.Vector3(120, 190, 1970), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(120, 190, 1970), 40, 2, 40, 'resources/textures/snow.jpg'));
 		this.scene.add(this.createPowerup(new THREE.Vector3(120, 190, 1970), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
-		this.scene.add(this.createPlatform(new THREE.Vector3(120, 190, 1930), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(70, 290, 1930), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(120, 190, 1930), 40, 2, 40, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(70, 290, 1930), 40, 2, 40, 'resources/textures/snow.jpg'));
 		this.scene.add(this.createPowerup(new THREE.Vector3(30, 290, 1930), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
-		this.scene.add(this.createPlatform(new THREE.Vector3(30, 290, 1930), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 400, 1890), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(30, 290, 1930), 40, 2, 40, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 400, 1890), 40, 2, 40, 'resources/textures/snow.jpg'));
 		this.scene.add(this.createPowerup(new THREE.Vector3(0, 400, 1890), 'resources/textures/dash.png', "DASH"));
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 400, 1850), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 400, 1850), 40, 2, 40, 'resources/textures/snow.jpg'));
 
 		// Consecutive jumps
 		var baseHeight = 400;
@@ -62,11 +62,11 @@ class Level3 extends Level {
 		for (var i = 0; i < 10; i++) {
 			this.scene.add(this.createBouncingPlatform(new THREE.Vector3(0, baseHeight, initialZ), 50, 2, 50));
 			initialZ -= 25;
-			this.scene.add(this.createPlatform(new THREE.Vector3(0, baseHeight + 50, initialZ), 50, 2, 50, 'resources/textures/cobblestone.jpg'));
+			this.scene.add(this.createPlatform(new THREE.Vector3(0, baseHeight + 50, initialZ), 50, 2, 50, 'resources/textures/snow.jpg'));
 			initialZ -= 25;
 		}
 
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 450, 1225), 50, 2, 50, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 450, 1225), 50, 2, 50, 'resources/textures/snow.jpg'));
 		this.scene.add(this.createPowerup(new THREE.Vector3(0, 450, 1275), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 
 		// Objective

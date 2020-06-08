@@ -11,27 +11,27 @@ class Level0 extends Level {
 		this.cinematicCoordenates.push([new THREE.Vector3(0, 100, -50), new THREE.Vector3(0, 250, 1900), new THREE.Vector3(0, 150, 2050)]);
 
 		// Plataforma inicial
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/field.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/dirt.jpg'));
 		this.scene.add(this.createIndicator(new THREE.Vector3(-30, 70, 30), 'resources/textures/level0Title.png', 30, false)); // tutorial title
 		this.scene.add(this.createIndicator(new THREE.Vector3(25, 70, 70), 'resources/textures/tutorialTip0.png', 20, false)); // tutotial jump tip
 
 		// Saltos iniciales
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 125), 40, 2, 40, 'resources/textures/field.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 125), 40, 2, 40, 'resources/textures/dirt.jpg'));
 		this.scene.add(this.createIndicator(new THREE.Vector3(-30, 70, 150), 'resources/textures/tutorialTip9.png', 20, false)); // tutotial menu tip
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 225), 40, 2, 40, 'resources/textures/field.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 225), 40, 2, 40, 'resources/textures/dirt.jpg'));
 		this.scene.add(this.createIndicator(new THREE.Vector3(30, 70, 250), 'resources/textures/tutorialTip10.png', 20, false)); // tutotial restart tip
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 300), 40, 2, 40, 'resources/textures/field.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 300), 40, 2, 40, 'resources/textures/bark.jpg'));
 
 		// Powerups
 		this.scene.add(this.createIndicator(new THREE.Vector3(-25, 90, 330), 'resources/textures/tutorialTip1.png', 20, false)); //tutorial powerup tip
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 340), 40, 2, 40, 'resources/textures/field.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 340), 40, 2, 40, 'resources/textures/bark.jpg'));
 		this.scene.add(this.createIndicator(new THREE.Vector3(25, 90, 370), 'resources/textures/tutorialTip2.png', 20, false)); //tutorial doublejump tip
 		this.scene.add(this.createPowerup(new THREE.Vector3(0, 70, 340), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 120, 475), 40, 2, 40, 'resources/textures/field.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 120, 515), 40, 2, 40, 'resources/textures/field.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 120, 475), 40, 2, 40, 'resources/textures/bark.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 120, 515), 40, 2, 40, 'resources/textures/bark.jpg'));
 		this.scene.add(this.createIndicator(new THREE.Vector3(25, 140, 580), 'resources/textures/tutorialTip3.png', 20, false)); //tutorial dash tip
 		this.scene.add(this.createPowerup(new THREE.Vector3(0, 120, 515), 'resources/textures/dash.png', "DASH"));
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 120, 555), 40, 2, 40, 'resources/textures/field.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 120, 555), 40, 2, 40, 'resources/textures/bark.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 800), 60, 2, 60, 'resources/textures/field.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 860), 60, 2, 60, 'resources/textures/field.jpg'));
 
