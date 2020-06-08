@@ -65,7 +65,7 @@ class Level3 extends Level {
 			this.scene.add(this.createPlatform(new THREE.Vector3(0, baseHeight + 50, initialZ), 50, 2, 50, 'resources/textures/snow.jpg'));
 			initialZ -= 25;
 		}
-
+		this.scene.add(this.createIndicator(new THREE.Vector3(-20, 420, 1350), 'resources/textures/dashRequired.jpg', 10, false));
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 450, 1225), 50, 2, 50, 'resources/textures/snow.jpg'));
 		this.scene.add(this.createPowerup(new THREE.Vector3(0, 450, 1275), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 
