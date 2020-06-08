@@ -47,7 +47,6 @@ class Level0 extends Level {
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 1520), 60, 2, 60, 'resources/textures/field.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 1580), 60, 2, 60, 'resources/textures/field.jpg'));
 		this.scene.add(this.createIndicator(new THREE.Vector3(-25, 90, 1580), 'resources/textures/tutorialTip6.png', 30, false)); //tutorial moving tip 1
-		this.scene.add(this.createIndicator(new THREE.Vector3(25, 90, 1630), 'resources/textures/tutorialTip7.png', 30, false)); //tutorial moving tip 2
 		this.scene.add(this.createMovingPlatform(new THREE.Vector3(0, 70, 1670), new THREE.Vector3(0, 70, 1800), 60, 2, 60, 'resources/textures/field.jpg', 5000, player));
 		this.scene.add(this.createIndicator(new THREE.Vector3(0, 100, 1980), 'resources/textures/tutorialTip8.png', 30, false)); //tutorial finish line tip
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 1900), 60, 2, 60, 'resources/textures/field.jpg'));
