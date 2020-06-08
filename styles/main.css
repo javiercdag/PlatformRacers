@@ -51,8 +51,12 @@ body {
 		vertical-align: middle;
 	}
 
-#mainMenu{
-	
+#mainMenu {
+	background: url("/resources/images/menuBackground.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 .menuLevelsContainer{
 	margin-left: 16.5%;
