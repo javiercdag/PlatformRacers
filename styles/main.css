@@ -12,11 +12,13 @@ body {
 	position: absolute;
 	bottom: 5%;
 	right: 1.5%;
+	width: 98.5%;
+	text-align: center;
 }
 
 #powerups img {
-	width: 10%;
-	height: 10%;
+	width: 7%;
+	height: 7%;
 }
 
 #goAgain {
@@ -59,19 +61,8 @@ body {
 
 #levelFinished {
 	width: 100%;
-	height: 100%;
-	display: -webkit-box;
-	display: -moz-box;
-	display: box;
-	-webkit-box-orient: horizontal;
-	-moz-box-orient: horizontal;
-	box-orient: horizontal;
-	-webkit-box-pack: center;
-	-moz-box-pack: center;
-	box-pack: center;
-	-webkit-box-align: center;
-	-moz-box-align: center;
-	box-align: center;
+
+	display: none;
 	color: #ffffff;
 	text-align: center;
 	font-family: Arial;
@@ -135,7 +126,7 @@ canvas {
 	-ms-user-select: none;
 	user-select: none;
 	pointer-events: none;
-	z-index: 1; /* TODO Solve this in HTML */
+	z-index: 1;
 }
 
 a, button, input, select {
@@ -147,7 +138,7 @@ a, button, input, select {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	z-index: 2 !important; /* TODO Solve this in HTML */
+	z-index: 2 !important;
 }
 
 #overlay {

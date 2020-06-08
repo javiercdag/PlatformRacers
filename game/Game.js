@@ -22,6 +22,9 @@ class Game {
 			case "2":
 				this.level = new Level2(this.camera);
 				break;
+			case "3":
+				this.level = new Level3(this.camera);
+				break;
 	   }
 
 		this.moveForward = false;
@@ -295,16 +298,21 @@ animate() {
 				rotatingIndicators[i].rotation.y += 0.05;
 			}
 
+			this.headRaycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, 1, 0), 0, 2);
+			this.headRaycaster.ray.origin.copy(this.controls.getObject().position);
+
 
 			var intersections = this.raycaster.intersectObjects(this.level.getCollidableObjects());
 			var playerOnObjective = this.raycaster.intersectObjects(this.level.getObjective());
 			var playerOnBouncingPlatform = this.raycaster.intersectObjects(this.level.getBouncingPlatforms());
 			var playerOnSpeedPlatform = this.raycaster.intersectObjects(this.level.getSpeedPlatforms());
+			var headbump = this.headRaycaster.intersectObjects(this.level.getCollidableObjects());
 
 			var onObject = intersections.length > 0;
 			var onObjective = playerOnObjective.length > 0;
 			var onBouncingPlatform = playerOnBouncingPlatform.length > 0;
 			var onSpeedPlatform = playerOnSpeedPlatform.length > 0;
+			var headbumping = headbump.length > 0;
 
 			var time = performance.now();
 			var delta = (time - this.prevTime) / 1000;
@@ -345,7 +353,11 @@ animate() {
 				this.velocity.y = Math.max(0, this.velocity.y);
 				this.canJump = true;
 			}
-			else {
+			else if (headbumping) {
+				if (this.velocity.y > 0)
+					this.velocity.y = 0;
+			}
+			else{
 				this.canJump = false;
 			}
 

@@ -4,16 +4,17 @@ class Level1 extends Level {
     }
 
 	createLevel(player) {
-		this.startingSpot = new THREE.Vector3(0, 65, 0);
-		this.startingView = new THREE.Vector3(20, 60, 0);
+		this.startingSpot = new THREE.Vector3(-20, 65, 0);
+		this.startingView = new THREE.Vector3(20, 65, 0);
 		this.gravity = 7.0;
 
 		this.cinematicCoordenates.push([new THREE.Vector3(-50, 300, 0), new THREE.Vector3(1030, 300, 0), new THREE.Vector3(1100, 60, 0)]);
 
-		//Plataforma inicial
+		// Initial platform
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/moon.jpg'));
+		this.scene.add(this.createIndicator(new THREE.Vector3(50, 70, 25), 'resources/textures/level1Title.png', 30, false)); // level info
 
-		//Conector 1
+		// Connector
 		this.scene.add(this.createPlatform(new THREE.Vector3(120, 80, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(190, 110, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPowerup(new THREE.Vector3(190, 110, 0), 'resources/textures/dash.png', "DASH"));
@@ -23,7 +24,7 @@ class Level1 extends Level {
 		this.scene.add(this.createPowerup(new THREE.Vector3(340, 140, 50), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 		this.scene.add(this.createPlatform(new THREE.Vector3(450, 140, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
 
-		//Conector 2
+		// 2nd Connector
 		this.scene.add(this.createBouncingPlatform(new THREE.Vector3(540, 55, -20), 30, 2, 30));
 		this.scene.add(this.createSpeedPlatform(new THREE.Vector3(620, 55, -200), 30, 2, 200));
 		this.scene.add(this.createPlatform(new THREE.Vector3(700, 55, -420), 30, 2, 200, 'resources/textures/moon.jpg'));
@@ -32,7 +33,9 @@ class Level1 extends Level {
 		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -450), 30, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createMovingPlatform(new THREE.Vector3(850, 55, -370), new THREE.Vector3(850, 55, -280), 40, 2, 40, 'resources/textures/moon.jpg', 3000));
 
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(1030, 55, 0), 400, 2, 400, 'resources/textures/moon.jpg');
+		// Objective
+		var objectivePlatform = this.createPlatform(new THREE.Vector3(1030, 55, 0), 400, 2, 400, 'resources/textures/crown.png');
+		objectivePlatform.rotation.y = Math.PI;
 
 		this.objective.push(objectivePlatform);
 		this.scene.add(objectivePlatform);
