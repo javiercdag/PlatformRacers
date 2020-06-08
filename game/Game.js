@@ -252,7 +252,7 @@ init() {
 	audioLoader.load(this.level.getMusic(), function( buffer ) {
 		that.sound.setBuffer( buffer );
 		that.sound.setLoop( true );
-		that.sound.setVolume(0.5);
+		that.sound.setVolume(0.2);
 		that.sound.play();
 	});
 

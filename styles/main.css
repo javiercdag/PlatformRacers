@@ -16,6 +16,37 @@ body {
 	text-align: center;
 }
 
+
+#crono {
+	position: absolute;
+	width: 200;
+	height: 100;
+	top: 2%;
+	left: 46%;
+	font-size: 300%;
+	text-align: center;
+	color: white;
+}
+
+#highscore {
+	position: absolute;
+	width: 200;
+	height: 100;
+	top: 2%;
+	right: 3%;
+	font-size: 300%;
+	text-align: center;
+	color: white;
+}
+
+#title {
+	font-size: 600%;
+	text-align: center;
+}
+
+#mainMenu{
+	
+}
 .menuLevelsContainer{
 	margin-left: 12.5%;
 	margin-right: 12.5%;
@@ -101,29 +132,6 @@ body {
 	margin-top: 15%;
 }
 
-#crono{
-	position: absolute;
-	width:200;
-	height:100;
-	top:2%;
-	left:43.5%;
-	font-size:300%;
-	text-align:center;
-	color:white;
-
-}
-
-#highscore {
-	position: absolute;
-	width: 200;
-	height: 100;
-	top: 2%;
-	right:3%;
-	font-size: 300%;
-	text-align: center;
-	color: white;
-}
-
 a {
 	color: #ff0;
 	text-decoration: none;
@@ -197,11 +205,6 @@ a, button, input, select {
 	background-color: #f00;
 	margin-top: 20px;
 	padding: 10px;
-}
-
-#title {
-	font-size: 600%;
-	text-align: center;
 }
 
 .pauseTitle{
