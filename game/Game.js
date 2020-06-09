@@ -249,10 +249,15 @@ init() {
 	this.camera.add (listener);
 	this.sound = new THREE.Audio( listener );
 	var audioLoader = new THREE.AudioLoader();
+	var volume = 0.1;
+
+	if (document.getElementById("musicRange").value >= 0 && document.getElementById("musicRange").value <= 100)
+		volume = document.getElementById("musicRange").value / 100.0;
+
 	audioLoader.load(this.level.getMusic(), function( buffer ) {
 		that.sound.setBuffer( buffer );
 		that.sound.setLoop( true );
-		that.sound.setVolume(0.2);
+		that.sound.setVolume(volume);
 		that.sound.play();
 	});
 
@@ -471,8 +476,17 @@ animate() {
 
 	this.renderer.render(this.level.getScene(), this.camera);
 
-	if (document.getElementById("musicRange").value >= 0 && document.getElementById("musicRange").value <= 100)
-		this.sound.setVolume(document.getElementById("musicRange").value / 100.0);
+	var userMusicVolume = document.getElementById("musicRange").value;
+	var userFov = document.getElementById("fov").value;
+
+	if (userMusicVolume >= 0 && userMusicVolume <= 100 && userMusicVolume != this.sound.getVolume())
+		this.sound.setVolume(userMusicVolume / 100.0);
+
+	if (userFov >= 60 && userFov <= 100 && userFov != this.camera.fov) {
+		this.camera.fov = userFov;
+		this.camera.updateProjectionMatrix();
+	}
+
 	TWEEN.update();
 }
 }

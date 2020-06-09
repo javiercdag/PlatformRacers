@@ -4,81 +4,91 @@ class Level1 extends Level {
     }
 
 	createLevel(player) {
-		this.startingSpot = new THREE.Vector3(-20, 65, 0);
-		this.startingView = new THREE.Vector3(20, 65, 0);
-		this.gravity = 6.0;
+		this.startingSpot = new THREE.Vector3(0, 65, -20);
+		this.startingView = new THREE.Vector3(0, 65, 20);
+		this.gravity = 7.0;
 
-		this.cinematicCoordenates.push([new THREE.Vector3(-50, 300, 0), new THREE.Vector3(1030, 300, 0), new THREE.Vector3(1100, 60, 0)]);
+		// Due to the very light colors used by the skybox of this map, some elements of the UI must get their color changed
+		document.getElementById("crono").style.color = "black";
+		document.getElementById("highscore").style.color = "black";
+
+		this.cinematicCoordenates.push([new THREE.Vector3(-500, 300, -100), new THREE.Vector3(200, 300, 2300), new THREE.Vector3(0, 200, 950)]);
 
 		// Initial platform
-		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createIndicator(new THREE.Vector3(50, 70, 25), 'resources/textures/level1Title.png', 30, false)); // level info
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 50, 0), 100, 2, 100, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createIndicator(new THREE.Vector3(-30, 70, 30), 'resources/textures/level1Title.png', 30, false)); // level info
 
-		// Connector
-		this.scene.add(this.createPlatform(new THREE.Vector3(120, 80, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(190, 110, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(260, 140, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(340, 140, 50), 40, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(450, 140, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
-
-		// 2nd Connector
-		this.scene.add(this.createBouncingPlatform(new THREE.Vector3(550, 85, 90), 30, 2, 30));
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(650, 85, 90), 30, 2, 30));
-    this.scene.add(this.createPlatform(new THREE.Vector3(750, 110, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createMovingPlatform(new THREE.Vector3(800, 110, 90), new THREE.Vector3(950, 110, 90), 30, 2, 30, 'resources/textures/moon.jpg', 6000, player));
-    this.scene.add(this.createPlatform(new THREE.Vector3(1000, 80, 90), 30, 2, 30, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPowerup(new THREE.Vector3(1000, 80, 90), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
-    this.scene.add(this.createIndicator(new THREE.Vector3(1150, 110, 90), 'resources/textures/doubleJumpRequired.jpg', 10, false));
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1100, 80, 90), 30, 2, 30));
-    this.scene.add(this.createPlatform(new THREE.Vector3(1200, 220, 90), 30, 2, 30, 'resources/textures/moon.jpg'));
-
-    //Bouncing zone
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1200, 220, -10), 30, 2, 30));
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1200, 220, -130), 30, 2, 30));
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1200, 220, -240), 30, 2, 30));
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1300, 230, -240), 30, 2, 30));
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1380, 230, -130), 30, 2, 30));
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1460, 230, -10), 30, 2, 30));
-
-    //Last section
-    this.scene.add(this.createPlatform(new THREE.Vector3(1540, 230, -10), 30, 2, 30, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPlatform(new THREE.Vector3(1540, 230, -110), 30, 2, 30, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPlatform(new THREE.Vector3(1640, 240, -110), 30, 2, 30, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPlatform(new THREE.Vector3(1640, 250, -210), 30, 2, 30, 'resources/textures/moon.jpg'));
-    this.scene.add(this.createPlatform(new THREE.Vector3(1740, 260, -210), 30, 2, 30, 'resources/textures/moon.jpg'));
-
-    //Speed section
-    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(1850, 260, -210), 80, 2, 20));
-    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(2000, 260, -110), 80, 2, 20));
-    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(2150, 260, -10), 80, 2, 20));
-    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(2300, 260, 90), 80, 2, 20));
-
-    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(2400, 260, 90), 20, 2, 20));
-    this.scene.add(this.createPowerup(new THREE.Vector3(2400, 260, 90), 'resources/textures/dash.png', "DASH"));
+		// First segment
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 60, 130), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 240), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(0, 70, 240), 'resources/textures/dash.png', "DASH"));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 280), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createSpeedPlatform(new THREE.Vector3(0, 70, 600), 60, 2, 120));
+		this.scene.add(this.createSpeedPlatform(new THREE.Vector3(0, 70, 720), 60, 2, 120));
+		this.scene.add(this.createBouncingPlatform(new THREE.Vector3(0, 10, 940), 50, 2, 50));
+		this.scene.add(this.createSpeedPlatform(new THREE.Vector3(0, 70, 1075), 60, 2, 120));
 
 
+		// Zig zag
+		this.scene.add(this.createPlatform(new THREE.Vector3(50, 70, 1250), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(10, 70, 1350), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(40, 70, 1450), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(20, 50, 1490), 15, 2, 15, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(20, 50, 1490), 'resources/textures/dash.png', "DASH"));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 1550), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+
+		// Moving segment
+		this.scene.add(this.createMovingPlatform(new THREE.Vector3(50, 70, 1640), new THREE.Vector3(-50, 70, 1800), 60, 2, 60, 'resources/textures/blueStone.jpg', 5000, player));
+		this.scene.add(this.createMovingPlatform(new THREE.Vector3(50, 70, 2000), new THREE.Vector3(-50, 70, 1880), 60, 2, 60, 'resources/textures/blueStone.jpg', 5000, player));
+
+		// Staircase
+		this.scene.add(this.createPlatform(new THREE.Vector3(80, 90, 2090), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(120, 90, 2090), 40, 2, 40, 'resources/textures/cobblestone.jpg'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(120, 90, 2090), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
+		this.scene.add(this.createPlatform(new THREE.Vector3(120, 190, 1970), 40, 2, 40, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(120, 190, 1970), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
+		this.scene.add(this.createPlatform(new THREE.Vector3(120, 190, 1930), 40, 2, 40, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(70, 290, 1930), 40, 2, 40, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(30, 290, 1930), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
+		this.scene.add(this.createPlatform(new THREE.Vector3(30, 290, 1930), 40, 2, 40, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 400, 1890), 40, 2, 40, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(0, 400, 1890), 'resources/textures/dash.png', "DASH"));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 400, 1850), 40, 2, 40, 'resources/textures/snow.jpg'));
+
+		// Consecutive jumps
+		var baseHeight = 400;
+		var initialZ = 1750;
+
+		for (var i = 0; i < 10; i++) {
+			this.scene.add(this.createBouncingPlatform(new THREE.Vector3(0, baseHeight, initialZ), 50, 2, 50));
+			initialZ -= 25;
+			this.scene.add(this.createPlatform(new THREE.Vector3(0, baseHeight + 50, initialZ), 50, 2, 50, 'resources/textures/snow.jpg'));
+			initialZ -= 25;
+		}
+		this.scene.add(this.createIndicator(new THREE.Vector3(-20, 420, 1350), 'resources/textures/dashRequired.jpg', 10, false));
+		this.scene.add(this.createPlatform(new THREE.Vector3(0, 450, 1225), 50, 2, 50, 'resources/textures/snow.jpg'));
+		this.scene.add(this.createPowerup(new THREE.Vector3(0, 450, 1275), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 
 		// Objective
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(2700, 250, 90), 50, 2, 50, 'resources/textures/crown.png');
-		objectivePlatform.rotation.y = Math.PI;
+		var objectivePlatform = this.createPlatform(new THREE.Vector3(0, 200, 1000), 60, 2, 60, 'resources/textures/crown.png');
 
 		this.objective.push(objectivePlatform);
 		this.scene.add(objectivePlatform);
 	}
 
     createMusic() {
-        this.music = '../resources/music/ElectronicFantasy.ogg';
+        this.music = '../resources/music/olympusMusic.mp4';
     }
 
     createTexture() {
         const loader = new THREE.CubeTextureLoader();
         const bgTexture = loader.load([
-            'resources/images/front.png',
-            'resources/images/back.png',
-            'resources/images/up.png',
-            'resources/images/down.png',
-            'resources/images/left.png',
-            'resources/images/right.png',
+            'resources/images/olympusFront.jpg',
+            'resources/images/olympusBack.jpg',
+            'resources/images/olympusUp.jpg',
+            'resources/images/olympusDown.jpg',
+            'resources/images/olympusLeft.jpg',
+            'resources/images/olympusRight.jpg',
         ]);
         this.scene.background = bgTexture;
 	}
