@@ -125,7 +125,7 @@ class Level {
 			if (player.position.y > (firstOrigin.y + 18) && player.position.y < (firstOrigin.y + 22) && player.position.x > (firstOrigin.x - width / 2.0) && player.position.x < (firstOrigin.x + width / 2.0)
 				&& player.position.z > (firstOrigin.z - depth / 2.0) && player.position.z < (firstOrigin.z + depth / 2.0)) { // player in platform
 
-				if (firstDisplacement.x < 1 && firstDisplacement.x > -1 && firstDisplacement.y < 1 && firstDisplacement.y > -1 && firstDisplacement.z < 1 && firstDisplacement.z > -1) {
+				if (firstDisplacement.x < 2 && firstDisplacement.x > -2 && firstDisplacement.y < 2 && firstDisplacement.y > -2 && firstDisplacement.z < 2 && firstDisplacement.z > -2) {
 					player.position.x += firstDisplacement.x;
 					player.position.y += firstDisplacement.y;
 					player.position.z += firstDisplacement.z;
