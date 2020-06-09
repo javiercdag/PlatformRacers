@@ -69,8 +69,7 @@ class Level2 extends Level {
         this.scene.add(this.createPlatform(new THREE.Vector3(405, 110, 950), 40, 2, 40, 'resources/textures/wood.jpg'));
         this.scene.add(this.createPlatform(new THREE.Vector3(405, 110, 875), 30, 2, 30, 'resources/textures/wood.jpg'));
         this.scene.add(this.createPlatform(new THREE.Vector3(405, 110, 800), 30, 2, 30, 'resources/textures/wood.jpg'));
-        this.scene.add(this.createPlatform(new THREE.Vector3(405, 110, 725), 30, 2, 30, 'resources/textures/wood.jpg'));
-        this.scene.add(this.createPlatform(new THREE.Vector3(405, 110, 660), 20, 2, 20, 'resources/textures/wood.jpg'));
+        this.scene.add(this.createMovingPlatform(new THREE.Vector3(405, 110, 725), new THREE.Vector3(405, 110, 660), 30, 2, 30, 'resources/textures/wood.jpg', 5000, player));
         this.scene.add(this.createPlatform(new THREE.Vector3(405, 110, 600), 20, 2, 20, 'resources/textures/wood.jpg'));
         this.scene.add(this.createPowerup(new THREE.Vector3(405, 110, 600), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 

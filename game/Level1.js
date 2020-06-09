@@ -6,7 +6,7 @@ class Level1 extends Level {
 	createLevel(player) {
 		this.startingSpot = new THREE.Vector3(-20, 65, 0);
 		this.startingView = new THREE.Vector3(20, 65, 0);
-		this.gravity = 7.0;
+		this.gravity = 6.0;
 
 		this.cinematicCoordenates.push([new THREE.Vector3(-50, 300, 0), new THREE.Vector3(1030, 300, 0), new THREE.Vector3(1100, 60, 0)]);
 
@@ -17,24 +17,49 @@ class Level1 extends Level {
 		// Connector
 		this.scene.add(this.createPlatform(new THREE.Vector3(120, 80, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
 		this.scene.add(this.createPlatform(new THREE.Vector3(190, 110, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPowerup(new THREE.Vector3(190, 110, 0), 'resources/textures/dash.png', "DASH"));
 		this.scene.add(this.createPlatform(new THREE.Vector3(260, 140, 0), 40, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPowerup(new THREE.Vector3(260, 140, 0), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 		this.scene.add(this.createPlatform(new THREE.Vector3(340, 140, 50), 40, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPowerup(new THREE.Vector3(340, 140, 50), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 		this.scene.add(this.createPlatform(new THREE.Vector3(450, 140, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
 
 		// 2nd Connector
-		this.scene.add(this.createBouncingPlatform(new THREE.Vector3(540, 55, -20), 30, 2, 30));
-		this.scene.add(this.createSpeedPlatform(new THREE.Vector3(620, 55, -200), 30, 2, 200));
-		this.scene.add(this.createPlatform(new THREE.Vector3(700, 55, -420), 30, 2, 200, 'resources/textures/moon.jpg'));
+		this.scene.add(this.createBouncingPlatform(new THREE.Vector3(550, 85, 90), 30, 2, 30));
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(650, 85, 90), 30, 2, 30));
+    this.scene.add(this.createPlatform(new THREE.Vector3(750, 110, 90), 40, 2, 40, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createMovingPlatform(new THREE.Vector3(800, 110, 90), new THREE.Vector3(950, 110, 90), 30, 2, 30, 'resources/textures/moon.jpg', 6000, player));
+    this.scene.add(this.createPlatform(new THREE.Vector3(1000, 80, 90), 30, 2, 30, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPowerup(new THREE.Vector3(1000, 80, 90), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
+    this.scene.add(this.createIndicator(new THREE.Vector3(1150, 110, 90), 'resources/textures/doubleJumpRequired.jpg', 10, false));
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1100, 80, 90), 30, 2, 30));
+    this.scene.add(this.createPlatform(new THREE.Vector3(1200, 220, 90), 30, 2, 30, 'resources/textures/moon.jpg'));
 
-		this.scene.add(this.createPlatform(new THREE.Vector3(780, 55, -480), 30, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createPlatform(new THREE.Vector3(850, 55, -450), 30, 2, 40, 'resources/textures/moon.jpg'));
-		this.scene.add(this.createMovingPlatform(new THREE.Vector3(850, 55, -370), new THREE.Vector3(850, 55, -280), 40, 2, 40, 'resources/textures/moon.jpg', 3000, player));
+    //Bouncing zone
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1200, 220, -10), 30, 2, 30));
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1200, 220, -130), 30, 2, 30));
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1200, 220, -240), 30, 2, 30));
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1300, 230, -240), 30, 2, 30));
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1380, 230, -130), 30, 2, 30));
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(1460, 230, -10), 30, 2, 30));
+
+    //Last section
+    this.scene.add(this.createPlatform(new THREE.Vector3(1540, 230, -10), 30, 2, 30, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPlatform(new THREE.Vector3(1540, 230, -110), 30, 2, 30, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPlatform(new THREE.Vector3(1640, 240, -110), 30, 2, 30, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPlatform(new THREE.Vector3(1640, 250, -210), 30, 2, 30, 'resources/textures/moon.jpg'));
+    this.scene.add(this.createPlatform(new THREE.Vector3(1740, 260, -210), 30, 2, 30, 'resources/textures/moon.jpg'));
+
+    //Speed section
+    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(1850, 260, -210), 80, 2, 20));
+    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(2000, 260, -110), 80, 2, 20));
+    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(2150, 260, -10), 80, 2, 20));
+    this.scene.add(this.createSpeedPlatform(new THREE.Vector3(2300, 260, 90), 80, 2, 20));
+
+    this.scene.add(this.createBouncingPlatform(new THREE.Vector3(2400, 260, 90), 20, 2, 20));
+    this.scene.add(this.createPowerup(new THREE.Vector3(2400, 260, 90), 'resources/textures/dash.png', "DASH"));
+
+
 
 		// Objective
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(1030, 55, 0), 400, 2, 400, 'resources/textures/crown.png');
+		var objectivePlatform = this.createPlatform(new THREE.Vector3(2700, 250, 90), 50, 2, 50, 'resources/textures/crown.png');
 		objectivePlatform.rotation.y = Math.PI;
 
 		this.objective.push(objectivePlatform);
