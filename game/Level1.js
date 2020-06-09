@@ -70,7 +70,7 @@ class Level1 extends Level {
 		this.scene.add(this.createPowerup(new THREE.Vector3(0, 450, 1275), 'resources/textures/doubleJump.png', "DOUBLE-JUMP"));
 
 		// Objective
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(0, 200, 1000), 60, 2, 60, 'resources/textures/crown.png');
+		var objectivePlatform = this.createPlatform(new THREE.Vector3(0, 200, 1000), 60, 2, 60, 'resources/textures/golden.jpg');
 
 		this.objective.push(objectivePlatform);
 		this.scene.add(objectivePlatform);

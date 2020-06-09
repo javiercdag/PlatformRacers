@@ -51,7 +51,7 @@ class Level0 extends Level {
 		this.scene.add(this.createIndicator(new THREE.Vector3(0, 100, 1980), 'resources/textures/tutorialTip8.png', 30, false)); //tutorial finish line tip
 		this.scene.add(this.createPlatform(new THREE.Vector3(0, 70, 1900), 60, 2, 60, 'resources/textures/field.jpg'));
 
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(0, 70, 2000), 60, 2, 60, 'resources/textures/crown.png');
+		var objectivePlatform = this.createPlatform(new THREE.Vector3(0, 70, 2000), 60, 2, 60, 'resources/textures/golden.jpg');
 		objectivePlatform.rotation.y = Math.PI;
 
 		this.objective.push(objectivePlatform);

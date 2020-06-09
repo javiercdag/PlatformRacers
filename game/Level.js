@@ -61,10 +61,10 @@ class Level {
 		var platform = this.createPlatform(position, width, height, depth, 'resources/textures/bouncing.png');
 
 		this.bouncingPlatforms.push(platform);
-		var indicatorNE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
-		var indicatorNW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
-		var indicatorSE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
-		var indicatorSW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/bouncingFX.png', 7, true);
+		var indicatorNE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/bouncingFX.png', 5, true);
+		var indicatorNW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z - depth / 2.0), 'resources/textures/bouncingFX.png', 5, true);
+		var indicatorSE = this.createIndicator(new THREE.Vector3(position.x + width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/bouncingFX.png', 5, true);
+		var indicatorSW = this.createIndicator(new THREE.Vector3(position.x - width / 2.0, position.y + 5.0, position.z + depth / 2.0), 'resources/textures/bouncingFX.png', 5, true);
 
 		this.scene.add(indicatorNE);
 		this.scene.add(indicatorNW);

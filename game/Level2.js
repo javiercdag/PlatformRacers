@@ -81,7 +81,8 @@ class Level2 extends Level {
         this.scene.add(this.createPlatform(new THREE.Vector3(510, 180, 1350), 50, 2, 50, 'resources/textures/wood.jpg'));
         this.scene.add(this.createPlatform(new THREE.Vector3(510, 190, 1425), 50, 2, 50, 'resources/textures/wood.jpg'));
 
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(510, 190, 1500), 20, 2, 20, 'resources/textures/gold.jpg');
+        var objectivePlatform = this.createPlatform(new THREE.Vector3(510, 190, 1500), 20, 2, 20, 'resources/textures/golden.jpg');
+        objectivePlatform.rotation.y = Math.PI;
 		this.objective.push(objectivePlatform);
 		this.scene.add(objectivePlatform);
 	}

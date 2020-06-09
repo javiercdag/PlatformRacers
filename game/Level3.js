@@ -59,7 +59,7 @@ class Level3 extends Level {
 
 
 		// Objective
-		var objectivePlatform = this.createPlatform(new THREE.Vector3(2700, 250, 90), 50, 2, 50, 'resources/textures/crown.png');
+        var objectivePlatform = this.createPlatform(new THREE.Vector3(2700, 250, 90), 50, 2, 50, 'resources/textures/golden.jpg');
 		objectivePlatform.rotation.y = 3.0/2.0*Math.PI;
 
 		this.objective.push(objectivePlatform);
