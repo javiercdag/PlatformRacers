@@ -1,3 +1,4 @@
+/* Styles shared by all the views */
 body {
 	margin: 0;
 	background-color: #000;
@@ -8,6 +9,80 @@ body {
 	overscroll-behavior: none;
 }
 
+a {
+	color: #ff0;
+	text-decoration: none;
+}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+button {
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+canvas {
+	display: block;
+}
+
+a, button, input, select {
+	pointer-events: auto;
+}
+
+
+/* Main menu styles */
+#title {
+	font-size: 600%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+	#title img {
+		width: 10%;
+		height: 10%;
+		vertical-align: middle;
+	}
+
+#mainMenu {
+	background: url("/resources/images/menuBackground.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.menuLevelsContainer {
+	margin-left: 16.5%;
+	margin-right: 10%;
+}
+
+.menuLevel {
+	width: 45%;
+	height: 30%;
+	margin-top: 2.5%;
+	margin-right: 1.5%;
+	margin-left: 1.5%;
+	float: left;
+	text-align: center;
+}
+
+	.menuLevel img {
+		width: 80%;
+		height: 80%;
+		margin-top: 2.5%;
+		border: solid;
+		border-color: gray;
+	}
+
+#level_title {
+	font-size: 300%;
+	text-align: center;
+}
+
+
+/* Styles used in-game (by the game Levels) */
 #powerups{
 	position: absolute;
 	bottom: 5%;
@@ -15,7 +90,6 @@ body {
 	width: 98.5%;
 	text-align: center;
 }
-
 
 #crono {
 	position: absolute;
@@ -37,53 +111,6 @@ body {
 	font-size: 300%;
 	text-align: center;
 	color: white;
-}
-
-#title {
-	font-size: 600%;
-	text-align: center;
-	vertical-align:middle;
-}
-
-	#title img {
-		width: 10%;
-		height: 10%;
-		vertical-align: middle;
-	}
-
-#mainMenu {
-	background: url("/resources/images/menuBackground.jpg") no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-.menuLevelsContainer{
-	margin-left: 16.5%;
-	margin-right: 10%;
-}
-
-.menuLevel {
-	width: 45%;
-	height: 30%;
-	margin-top: 2.5%;
-	margin-right: 1.5%;
-	margin-left: 1.5%;
-	float: left;
-	text-align:center;
-}
-
-.menuLevel img {
-	width: 80%;
-	height:80%;
-	margin-top: 2.5%;
-	border: solid;
-	border-color: gray;
-}
-
-#level_title {
-	font-size: 300%;
-	text-align: center;
 }
 
 #powerups img {
@@ -143,24 +170,6 @@ body {
 	margin-top: 15%;
 }
 
-a {
-	color: #ff0;
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-button {
-	cursor: pointer;
-	text-transform: uppercase;
-}
-
-canvas {
-	display: block;
-}
-
 #info {
 	position: absolute;
 	top: 0px;
@@ -174,48 +183,6 @@ canvas {
 	user-select: none;
 	pointer-events: none;
 	z-index: 1;
-}
-
-a, button, input, select {
-	pointer-events: auto;
-}
-
-.dg.ac {
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	z-index: 2 !important;
-}
-
-#overlay {
-	position: absolute;
-	z-index: 2;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: rgba(0,0,0,0.7);
-}
-
-#overlay button {
-	background: #ffffff;
-	border: 0;
-	color: #000000;
-	padding: 16px 20px;
-	text-transform: uppercase;
-	cursor: pointer;
-}
-
-#notSupported {
-	width: 50%;
-	margin: auto;
-	background-color: #f00;
-	margin-top: 20px;
-	padding: 10px;
 }
 
 .pauseTitle{

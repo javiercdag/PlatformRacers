@@ -74,68 +74,6 @@ class Level {
 		return platform;
     }
 
-	// In order to allow the platform to carry the player when it moves, we've had to make some sacrifices in terms on both code readability
-	// and code efficiency inside of this function.
-	createMovingPlatform(initialPosition, endingPosition, width, height, depth, texture, time, player) {
-		var platform = this.createPlatform(initialPosition, width, height, depth, texture);
-
-		var origin = JSON.parse(JSON.stringify(initialPosition));
-		var end = JSON.parse(JSON.stringify(endingPosition));
-		var prevOrigin = JSON.parse(JSON.stringify(origin));
-		var translation = new THREE.Vector3(0, 0, 0);
-		var that = this;
-
-		var platformToEnd = new TWEEN.Tween(origin).to(end, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
-			platform.position.set(origin.x, origin.y, origin.z);
-			translation.x = origin.x - prevOrigin.x;
-			translation.y = origin.y - prevOrigin.y;
-			translation.z = origin.z - prevOrigin.z;
-
-			if (player.position.y > (origin.y + 18) && player.position.y < (origin.y + 22) && player.position.x > (origin.x - width / 2.0) && player.position.x < (origin.x + width / 2.0)
-				&& player.position.z > (origin.z - depth / 2.0) && player.position.z < (origin.z + depth / 2.0)) { // player in platform
-
-				if (translation.x < 1 && translation.x > -1 && translation.y < 1 && translation.y > -1 && translation.z < 1 && translation.z > -1) {
-					player.position.x += translation.x;
-					player.position.y += translation.y;
-					player.position.z += translation.z;
-				}
-			}
-
-			prevOrigin = JSON.parse(JSON.stringify(origin));
-		});
-
-		var origin2 = JSON.parse(JSON.stringify(endingPosition));
-		var end2 = JSON.parse(JSON.stringify(initialPosition));
-		var prevOrigin2 = JSON.parse(JSON.stringify(origin2));
-		var translation2 = new THREE.Vector3(0, 0, 0);
-
-		var platformToOrigin = new TWEEN.Tween(origin2).to(end2, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
-			platform.position.set(origin2.x, origin2.y, origin2.z);
-
-			translation2.x = origin2.x - prevOrigin2.x;
-			translation2.y = origin2.y - prevOrigin2.y;
-			translation2.z = origin2.z - prevOrigin2.z;
-
-			if (player.position.y > (origin2.y + 18) && player.position.y < (origin2.y + 22) && player.position.x > (origin2.x - width / 2.0) && player.position.x < (origin2.x + width / 2.0)
-				&& player.position.z > (origin2.z - depth / 2.0) && player.position.z < (origin2.z + depth / 2.0)) { // player in platform
-
-				if (translation2.x < 1 && translation2.x > -1 && translation2.y < 1 && translation2.y > -1 && translation2.z < 1 && translation2.z > -1) {
-					player.position.x += translation2.x;
-					player.position.y += translation2.y;
-					player.position.z += translation2.z;
-				}
-			}
-			
-			prevOrigin2 = JSON.parse(JSON.stringify(origin2));
-		});
-
-		platformToEnd.chain(platformToOrigin);
-		platformToOrigin.chain(platformToEnd);
-		platformToEnd.start();
-
-		return platform;
-	}
-
 	createPlatform(position, width, height, depth, texture) {
 		var platformGeometry = new THREE.BoxBufferGeometry(width, height, depth);
 
@@ -164,7 +102,70 @@ class Level {
 		this.scene.add(indicatorSW);
 
 		return platform;
-    }
+	}
+
+	// In order to allow the platform to carry the player when it moves, we've had to make some sacrifices in terms on both code readability
+	// and code efficiency inside of this function.
+	createMovingPlatform(initialPosition, endingPosition, width, height, depth, texture, time, player) {
+		var platform = this.createPlatform(initialPosition, width, height, depth, texture);
+
+		// Variables of the first half of the platform movement
+		var firstOrigin = JSON.parse(JSON.stringify(initialPosition));
+		var firstEnd = JSON.parse(JSON.stringify(endingPosition));
+		var firstPrevOrigin = JSON.parse(JSON.stringify(firstOrigin));
+		var firstDisplacement = new THREE.Vector3(0, 0, 0);
+		var that = this;
+
+		var firstHalfMovement = new TWEEN.Tween(firstOrigin).to(firstEnd, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
+			platform.position.set(firstOrigin.x, firstOrigin.y, firstOrigin.z);
+			firstDisplacement.x = firstOrigin.x - firstPrevOrigin.x;
+			firstDisplacement.y = firstOrigin.y - firstPrevOrigin.y;
+			firstDisplacement.z = firstOrigin.z - firstPrevOrigin.z;
+
+			if (player.position.y > (firstOrigin.y + 18) && player.position.y < (firstOrigin.y + 22) && player.position.x > (firstOrigin.x - width / 2.0) && player.position.x < (firstOrigin.x + width / 2.0)
+				&& player.position.z > (firstOrigin.z - depth / 2.0) && player.position.z < (firstOrigin.z + depth / 2.0)) { // player in platform
+
+				if (firstDisplacement.x < 1 && firstDisplacement.x > -1 && firstDisplacement.y < 1 && firstDisplacement.y > -1 && firstDisplacement.z < 1 && firstDisplacement.z > -1) {
+					player.position.x += firstDisplacement.x;
+					player.position.y += firstDisplacement.y;
+					player.position.z += firstDisplacement.z;
+				}
+			}
+
+			firstPrevOrigin = JSON.parse(JSON.stringify(firstOrigin));
+		});
+
+		var secondOrigin = JSON.parse(JSON.stringify(endingPosition));
+		var secondEnd = JSON.parse(JSON.stringify(initialPosition));
+		var secondPrevOrigin = JSON.parse(JSON.stringify(secondOrigin));
+		var secondDisplacement = new THREE.Vector3(0, 0, 0);
+
+		var secondHalfMovement = new TWEEN.Tween(secondOrigin).to(secondEnd, time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(function () {
+			platform.position.set(secondOrigin.x, secondOrigin.y, secondOrigin.z);
+
+			secondDisplacement.x = secondOrigin.x - secondPrevOrigin.x;
+			secondDisplacement.y = secondOrigin.y - secondPrevOrigin.y;
+			secondDisplacement.z = secondOrigin.z - secondPrevOrigin.z;
+
+			if (player.position.y > (secondOrigin.y + 18) && player.position.y < (secondOrigin.y + 22) && player.position.x > (secondOrigin.x - width / 2.0) && player.position.x < (secondOrigin.x + width / 2.0)
+				&& player.position.z > (secondOrigin.z - depth / 2.0) && player.position.z < (secondOrigin.z + depth / 2.0)) { // player in platform
+
+				if (secondDisplacement.x < 1 && secondDisplacement.x > -1 && secondDisplacement.y < 1 && secondDisplacement.y > -1 && secondDisplacement.z < 1 && secondDisplacement.z > -1) {
+					player.position.x += secondDisplacement.x;
+					player.position.y += secondDisplacement.y;
+					player.position.z += secondDisplacement.z;
+				}
+			}
+
+			secondPrevOrigin = JSON.parse(JSON.stringify(secondOrigin));
+		});
+
+		firstHalfMovement.chain(secondHalfMovement);
+		secondHalfMovement.chain(firstHalfMovement);
+		firstHalfMovement.start();
+
+		return platform;
+	}
 
 	createPowerup(position, texture, type) {
 		var powerupColliderGeometry =  new THREE.BoxBufferGeometry(15, 2, 15);
