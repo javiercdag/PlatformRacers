@@ -8,6 +8,7 @@ class Game {
 	constructor() {
 
 		this.raycaster;
+		this.headRaycaster;
 		this.stats;
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
 		this.camera.position.y = 10; // player height
@@ -227,6 +228,7 @@ init() {
 
 
 	this.raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
+	this.headRaycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, 1, 0), 0, 2);
 
 	this.renderer = new THREE.WebGLRenderer({ antialias: true });
 	this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -303,7 +305,6 @@ animate() {
 				rotatingIndicators[i].rotation.y += 0.05;
 			}
 
-			this.headRaycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, 1, 0), 0, 2);
 			this.headRaycaster.ray.origin.copy(this.controls.getObject().position);
 
 
