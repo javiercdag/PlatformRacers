@@ -57,6 +57,19 @@ class Level {
 
 	}
 
+	createPlatform(position, width, height, depth, texture) {
+		var platformGeometry = new THREE.BoxBufferGeometry(width, height, depth);
+
+		var texture = new THREE.TextureLoader().load(texture);
+		var platformMaterial = new THREE.MeshBasicMaterial({ map: texture });
+		//var platformMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+		var platform = new THREE.Mesh(platformGeometry, platformMaterial);
+		platform.position.set(position.x, position.y, position.z);
+		this.objects.push(platform);
+
+		return platform;
+	}
+
 	createBouncingPlatform(position, width, height, depth) {
 		var platform = this.createPlatform(position, width, height, depth, 'resources/textures/bouncing.png');
 
@@ -73,19 +86,6 @@ class Level {
 
 		return platform;
     }
-
-	createPlatform(position, width, height, depth, texture) {
-		var platformGeometry = new THREE.BoxBufferGeometry(width, height, depth);
-
-		var texture = new THREE.TextureLoader().load( texture );
-		var platformMaterial = new THREE.MeshBasicMaterial( { map: texture } );
-		//var platformMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
-		var platform = new THREE.Mesh(platformGeometry, platformMaterial);
-		platform.position.set(position.x, position.y, position.z);
-		this.objects.push(platform);
-
-		return platform;
-	}
 
 	createSpeedPlatform(position, width, height, depth) {
 		var platform = this.createPlatform(position, width, height, depth, 'resources/textures/speedPlatform.png');
