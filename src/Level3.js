@@ -70,7 +70,7 @@ class Level3 extends Level {
         this.music = '../resources/music/ElectronicFantasy.ogg';
     }
 
-    createTexture() {
+    createSkybox() {
         const loader = new THREE.CubeTextureLoader();
         const bgTexture = loader.load([
             'resources/images/front.png',

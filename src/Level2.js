@@ -91,7 +91,7 @@ class Level2 extends Level {
         this.music = '../resources/music/GreatLittleChallenge.ogg';
     }
 
-    createTexture() {
+    createSkybox() {
         this.scene.background = 0x000000;
 	}
 

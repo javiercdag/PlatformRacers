@@ -62,7 +62,7 @@ class Level0 extends Level {
         this.music = '../resources/music/tutorialMusic.mp3';
     }
 
-    createTexture() {
+    createSkybox() {
         const loader = new THREE.CubeTextureLoader();
         const bgTexture = loader.load([
             'resources/images/tutorialFront.png',

@@ -80,7 +80,7 @@ class Level1 extends Level {
         this.music = '../resources/music/olympusMusic.mp4';
     }
 
-    createTexture() {
+    createSkybox() {
         const loader = new THREE.CubeTextureLoader();
         const bgTexture = loader.load([
             'resources/images/olympusFront.jpg',
