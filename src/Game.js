@@ -2,7 +2,7 @@
 import * as THREE from '../build/three.module.js';
 import Stats from '../libs/stats.module.js';
 
-import { PointerLockControls } from '../jsm/controls/PointerLockControls.js';
+import { PointerLockControls } from '../libs/PointerLockControls.js';
 
 class Game {
 	constructor() {
